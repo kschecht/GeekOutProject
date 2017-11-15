@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Test_Geekout.iml" filepath="$PROJECT_DIR$/Test_Geekout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GeekOutProject.iml" filepath="$PROJECT_DIR$/GeekOutProject.iml" />
+      <module fileurl="file://C:\Users\kschechter\GeekOutProject\Test_Geekout.iml" filepath="C:\Users\kschechter\GeekOutProject\Test_Geekout.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\kschechter\GeekOutProject\app\app.iml" filepath="C:\Users\kschechter\GeekOutProject\app\app.iml" />
     </modules>
   </component>
 </project>
