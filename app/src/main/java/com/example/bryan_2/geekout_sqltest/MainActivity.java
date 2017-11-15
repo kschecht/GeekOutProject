@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,12 +31,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     static final private String GAMES = "Games";
-    static final private String COMICS = "Comics";
-    static final private String SCI_FI = "Sci-Fi";
+    static final private String COMICS = "Comic Books";
+    static final private String SCI_FI = "Sci Fi";
     static final private String FANTASY = "Fantasy";
     static final private String MISCELLANEOUS = "Miscellaneous";
 
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<String, Cursor> cursorHashMap;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +63,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+
         mTV = (TextView) findViewById(R.id.textView);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button diffquestionButton = (Button) findViewById(R.id.diffquestionButton);
+        diffquestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -157,6 +162,46 @@ public class MainActivity extends AppCompatActivity {
 
                 // Show AlertDialogFragment
                 mDialog.show(getFragmentManager(), "Alert");
+            }
+        });
+
+        /*
+            Stand in method for picking a new category
+            TODO - Allow users to reroll if they don't like the category for some reason
+
+         */
+        Button rerollButton = (Button) findViewById(R.id.rerollButton);
+        rerollButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "Re-Roll for Category");
+                ImageView imageView  = (ImageView) findViewById(R.id.questionImage);
+                Random r = new Random();
+                int category_number = r.nextInt(5);
+                switch(category_number) {
+                    case 0:
+                        chosenCategory = GAMES;
+                        imageView.setBackgroundColor(getResources().getColor(R.color.games));
+                        break;
+                    case 1:
+                        chosenCategory = COMICS;
+                        imageView.setBackgroundColor(getResources().getColor(R.color.comicbooks));
+                        break;
+                    case 2:
+                        chosenCategory = SCI_FI;
+                        imageView.setBackgroundColor(getResources().getColor(R.color.scifi));
+                        break;
+                    case 3:
+                        chosenCategory = FANTASY;
+                        imageView.setBackgroundColor(getResources().getColor(R.color.fantasy));
+                        break;
+                    case 4:
+                        chosenCategory = MISCELLANEOUS;
+                        imageView.setBackgroundColor(getResources().getColor(R.color.miscellaneous));
+                        break;
+                }
+                mTV.setText("Click on Button");
+                Toast.makeText(getApplicationContext(),"Category Changed To: " + chosenCategory, Toast.LENGTH_SHORT).show();
             }
         });
     }
