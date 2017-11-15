@@ -30,6 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     final private static String CREATE_CMD =
 
+            // These values need to match QUESTION_NAME, QUESTION_CATEGORY, and QUESTION_BID
             "CREATE TABLE questions " +
                     "(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, category TEXT NOT NULL, bid INTEGER)";
 
