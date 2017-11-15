@@ -2,5 +2,10 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="games">#e90206</color>
+    <color name="comicbooks">#111ce8</color>
+    <color name="scifi">#ffff40</color>
+    <color name="fantasy">#15cd0c</color>
+    <color name="miscellaneous">#000000</color>
 </resources>
