@@ -1,11 +1,14 @@
 package com.example.bryan_2.geekout_sqltest;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.widget.Button;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private SimpleCursorAdapter mAdapter;
     private Cursor cursor;
     private String TAG = "TAG";
+    private DialogFragment mDialog;
     private String chosenCategory = GAMES;
     private HashMap<String, Cursor> cursorHashMap;
 
@@ -111,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
         // Insert records
         insertQuestions();
 
+
+		
+      
         // Creating cursors for the five main categories and randomly organizing their contents
         cursorHashMap = new HashMap<String, Cursor>();
 
@@ -138,6 +145,20 @@ public class MainActivity extends AppCompatActivity {
         for(HashMap.Entry<String, Cursor> entry : cursorHashMap.entrySet()) {
             entry.getValue().moveToFirst();
         }
+      
+      Button doneButton = (Button) findViewById(R.id.doneButton);
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "Done with picking");
+
+                // Create a new AlertDialogFragment
+                mDialog = PlayerChangeDialogFragment.newInstance();
+
+                // Show AlertDialogFragment
+                mDialog.show(getFragmentManager(), "Alert");
+            }
+        });
     }
 
     // Insert several question records
