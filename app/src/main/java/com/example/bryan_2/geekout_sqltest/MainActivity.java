@@ -30,11 +30,11 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String GAMES = "Games";
-    private String COMICS = "Comics";
-    private String SCI_FI = "Sci-Fi";
-    private String FANTASY = "Fantasy";
-    private String MISCELLANEOUS = "Miscellaneous";
+    static final private String GAMES = "Games";
+    static final private String COMICS = "Comics";
+    static final private String SCI_FI = "Sci-Fi";
+    static final private String FANTASY = "Fantasy";
+    static final private String MISCELLANEOUS = "Miscellaneous";
 
     private TextView mTV;
     private DBHelper mDbHelper;
