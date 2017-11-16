@@ -28,6 +28,6 @@ public class SettingsActivity extends Activity {
 
         }
 
-        settingsPrefsEditor.commit();
+        settingsPrefsEditor.apply();
     }
 }
