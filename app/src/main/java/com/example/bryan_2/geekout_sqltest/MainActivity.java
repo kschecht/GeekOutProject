@@ -3,6 +3,7 @@ package com.example.bryan_2.geekout_sqltest;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -35,6 +36,18 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String SETTINGS_PREFS_NAME = "SettingsPrefs";
+    public static final String GAME_MODE = "GameMode";
+    public static final int POINTS_MODE = 0;
+    public static final int TIME_MODE = 1;
+    public static final int ROUND_MODE = 2;
+    public static final String MAX_POINTS = "MaxPoints";
+    public static final int DEFAULT_POINTS = 5;
+    public static final String MAX_MINUTES = "MaxMinutes";
+    public static final int DEFAULT_MINUTES = 10;
+    public static final String MAX_ROUNDS = "MaxRounds";
+    public static final int DEFAULT_ROUNDS = 6;
+
     static final private String GAMES = "Games";
     static final private String COMICS = "Comic Books";
     static final private String SCI_FI = "Sci Fi";
@@ -57,6 +70,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences settingsPrefs = getSharedPreferences
+                (MainActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+        if (settingsPrefs.getAll().isEmpty()) {
+            SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
+            settingsPrefsEditor.putInt(MainActivity.GAME_MODE, MainActivity.POINTS_MODE);
+            settingsPrefsEditor.putInt(MainActivity.MAX_POINTS, MainActivity.DEFAULT_POINTS);
+            settingsPrefsEditor.putInt(MainActivity.MAX_MINUTES, MainActivity.DEFAULT_MINUTES);
+            settingsPrefsEditor.putInt(MainActivity.MAX_ROUNDS, MainActivity.DEFAULT_ROUNDS);
+            settingsPrefsEditor.commit();
+        }
+
 
         // Toolbar for settings and stuff
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -150,7 +175,8 @@ public class MainActivity extends AppCompatActivity {
         for(HashMap.Entry<String, Cursor> entry : cursorHashMap.entrySet()) {
             entry.getValue().moveToFirst();
         }
-      
+
+      // baseline implementation for change player dialog
       Button doneButton = (Button) findViewById(R.id.doneButton);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
