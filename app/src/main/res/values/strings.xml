@@ -11,4 +11,6 @@
     <string name="round_limit_hint">6</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
+    <string name="reroll">Re-Roll</string>
+    <string name="differentQuestion">Different Question</string>
 </resources>
