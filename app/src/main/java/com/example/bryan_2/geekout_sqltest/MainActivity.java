@@ -39,14 +39,18 @@ public class MainActivity extends AppCompatActivity {
     // SharedPreferences GameMode
     public static final String GAME_MODE = "GameMode";
     public static final int POINTS_MODE = 0;
-    public static final int TIME_MODE = 1;
+    // if implementing time, uncomment this
+    //public static final int TIME_MODE = 1;
     public static final int ROUND_MODE = 2;
     // SharedPreferences game point limit (if POINTS_MODE)
     public static final String MAX_POINTS = "MaxPoints";
     public static final int DEFAULT_POINTS = 5;
     // SharedPreferences game time limit (if TIME_MODE)
+    // if implementing time, uncomment this
+    /*
     public static final String MAX_MINUTES = "MaxMinutes";
     public static final int DEFAULT_MINUTES = 10;
+    */
     // SharedPreferences game round limit (if ROUND_MODE)
     public static final String MAX_ROUNDS = "MaxRounds";
     public static final int DEFAULT_ROUNDS = 6;
@@ -82,19 +86,31 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences settingsPrefs = getSharedPreferences
                 (MainActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
-        if (settingsPrefs.getAll().isEmpty()) {
-            SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
+        SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
+        // initialize settings to defaults if they haven't been initialized yet
+        if (settingsPrefs.getInt(GAME_MODE, -1) == -1) {
             settingsPrefsEditor.putInt(MainActivity.GAME_MODE, MainActivity.POINTS_MODE);
-            settingsPrefsEditor.putInt(MainActivity.MAX_POINTS, MainActivity.DEFAULT_POINTS);
-            settingsPrefsEditor.putInt(MainActivity.MAX_MINUTES, MainActivity.DEFAULT_MINUTES);
-            settingsPrefsEditor.putInt(MainActivity.MAX_ROUNDS, MainActivity.DEFAULT_ROUNDS);
-            settingsPrefsEditor.apply();
         }
+        if (settingsPrefs.getInt(MAX_ROUNDS, -1) == -1) {
+            settingsPrefsEditor.putInt(MainActivity.MAX_ROUNDS, MainActivity.DEFAULT_POINTS);
+        }
+        // if implementing time, uncomment this
+        /*
+        if (settingsPrefs.getInt(MAX_MINUTES, -1) == -1) {
+            settingsPrefsEditor.putInt(MainActivity.MAX_MINUTES, MainActivity.DEFAULT_MINUTES);
+        }
+        */
+        if (settingsPrefs.getInt(MAX_POINTS, -1) == -1) {
+            settingsPrefsEditor.putInt(MainActivity.MAX_POINTS, MainActivity.DEFAULT_ROUNDS);
+        }
+        settingsPrefsEditor.apply();
 
 
         // Toolbar for settings and stuff
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // TODO - settings button
 
 
         mTV = (TextView) findViewById(R.id.textView);
