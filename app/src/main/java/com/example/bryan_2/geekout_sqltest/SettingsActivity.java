@@ -78,10 +78,10 @@ public class SettingsActivity extends Activity {
                 // set shared prefs round limit
                 settingsPrefsEditor.putInt(MainActivity.MAX_ROUNDS, Integer.parseInt(mRoundLimitText.getText().toString()));
 
+                settingsPrefsEditor.apply();
+                
                 finish();
             }
         });
-
-        settingsPrefsEditor.apply();
     }
 }

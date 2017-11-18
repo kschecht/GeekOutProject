@@ -3,6 +3,7 @@ package com.example.bryan_2.geekout_sqltest;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -114,7 +115,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // TODO - settings button
+        Button settingsButton = (Button) findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent launchSettingsActInt = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(launchSettingsActInt);
+            }
+        });
 
 
 

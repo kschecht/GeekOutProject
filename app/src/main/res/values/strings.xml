@@ -13,4 +13,5 @@
     <string name="update">Update</string>
     <string name="reroll">Re-Roll</string>
     <string name="differentQuestion">Different Question</string>
+    <string name="settings_title">Settings</string>
 </resources>
