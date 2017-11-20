@@ -6,8 +6,8 @@
     <string name="points">Points</string>
     <string name="rounds">Rounds</string>
     <string name="point_limit">Point Limit (if Points selected)</string>
-    <string name="point_limit_hint">6</string>
-    <string name="round_limit">Round Limit (if Points selected)</string>
+    <string name="point_limit_hint">5</string>
+    <string name="round_limit">Round Limit (if Rounds selected)</string>
     <string name="round_limit_hint">6</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
