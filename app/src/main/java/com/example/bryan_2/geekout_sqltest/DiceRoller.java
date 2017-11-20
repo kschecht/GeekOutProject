@@ -41,100 +41,110 @@ public class DiceRoller extends AppCompatActivity {
 
             public void onClick(View v) {
 
-                numberGenerated = randomNumber.nextInt(6)+1;
+                // TODO Change dice number if we need more than 5 categories
+                numberGenerated = randomNumber.nextInt(5)+1;
 
+                // Games
                 if(numberGenerated==1) {
                     diceImage.setImageResource(R.drawable.dice_six_faces_one);
-                    myView.setBackgroundResource(R.color.red);
+                    myView.setBackgroundResource(R.color.games);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v)
                         {
-                            Intent sendIntent = new Intent(DiceRoller.this, MainActivity.class);
-                            sendIntent.putExtra("redColor", R.color.red);
+                            Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
+                            sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.GAMES);
+                            sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.games));
                             startActivity(sendIntent);
                         }
                     });
 
                 }
+                // Sci Fi
                 else if(numberGenerated==2) {
                     diceImage.setImageResource(R.drawable.dice_six_faces_two);
-                    myView.setBackgroundResource(R.color.yellow);
+                    myView.setBackgroundResource(R.color.scifi);
 
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v)
                         {
-                            Intent sendIntent = new Intent(DiceRoller.this, MainActivity.class);
-                            sendIntent.putExtra("yellow", R.color.yellow);
+                            Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
+                            sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.SCI_FI);
+                            sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.scifi));
                             startActivity(sendIntent);
                         }
                     });
 
 
                 }
+                // Fantasy
                 else if(numberGenerated==3) {
                     diceImage.setImageResource(R.drawable.dice_six_faces_three);
-                    myView.setBackgroundResource(R.color.green);
+                    myView.setBackgroundResource(R.color.fantasy);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v)
                         {
-                            Intent sendIntent = new Intent(DiceRoller.this, MainActivity.class);
-                            sendIntent.putExtra("green", R.color.green);
-
+                            Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
+                            sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.FANTASY);
+                            sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.fantasy));
                             startActivity(sendIntent);
                         }
                     });
                 }
 
+                // Miscellaneous
                 else if(numberGenerated==4) {
                     diceImage.setImageResource(R.drawable.dice_six_faces_four);
-                    myView.setBackgroundResource(R.color.teal);
+                    myView.setBackgroundResource(R.color.miscellaneous);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v)
                         {
-                            Intent sendIntent = new Intent(DiceRoller.this, MainActivity.class);
-                            sendIntent.putExtra("teal", R.color.teal);
+                            Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
+                            sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.MISCELLANEOUS);
+                            sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.miscellaneous));
                             startActivity(sendIntent);
                         }
                     });
                 }
 
+                // Comic Books
                 else if(numberGenerated==5) {
                     diceImage.setImageResource(R.drawable.dice_six_faces_five);
-                    myView.setBackgroundResource(R.color.pink);
+                    myView.setBackgroundResource(R.color.comicbooks);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v)
                         {
-                            Intent sendIntent = new Intent(DiceRoller.this, MainActivity.class);
-                            sendIntent.putExtra("pink", R.color.pink);
-
+                            Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
+                            sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.COMICS);
+                            sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.comicbooks));
                             startActivity(sendIntent);
                         }
                     });
                 }
 
-                else if(numberGenerated==6) {
-                    diceImage.setImageResource(R.drawable.dice_six_faces_six);
-                    myView.setBackgroundResource(R.color.blue);
-
-                    questionButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v)
-                        {
-                            Intent sendIntent = new Intent(DiceRoller.this, MainActivity.class);
-                            sendIntent.putExtra("blue", R.color.blue);
-
-                            startActivity(sendIntent);
-                        }
-                    });
-                }
+                // TODO implement if we need more categoreis
+//                else if(numberGenerated==6) {
+//                    diceImage.setImageResource(R.drawable.dice_six_faces_six);
+//                    myView.setBackgroundResource(R.color.pink);
+//
+//                    questionButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v)
+//                        {
+//                            Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
+//                            sendIntent.putExtra("pink", R.color.pink);
+//
+//                            startActivity(sendIntent);
+//                        }
+//                    });
+//                }
 
             }
 

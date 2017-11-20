@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.bryan_2.geekout_sqltest.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="com.example.bryan_2.geekout_sqltest.QuestionActivity"
+    tools:showIn="@layout/activity_questions">
 
     <TextView
         android:id="@+id/textView"
@@ -16,16 +16,7 @@
         android:text="Click Button"
         android:textColor="@android:color/background_dark"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <ImageView
-        android:id="@+id/questionImage"
-        android:layout_width="181dp"
-        android:layout_height="192dp"
-        android:background="@color/games"
-        android:gravity="top|center"
-        app:srcCompat="@android:drawable/ic_menu_help"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="51dp" />
+        tools:layout_editor_absoluteY="0dp"
+        android:textSize="32sp"/>
 
 </android.support.constraint.ConstraintLayout>

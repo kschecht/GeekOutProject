@@ -1,6 +1,5 @@
 package com.example.bryan_2.geekout_sqltest;
 
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -9,9 +8,7 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.widget.Button;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,11 +19,7 @@ import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,7 +28,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class QuestionActivity extends AppCompatActivity {
 
     // name of SharedPreferences with settings
     public static final String SETTINGS_PREFS_NAME = "SettingsPrefs";
@@ -59,18 +52,22 @@ public class MainActivity extends AppCompatActivity {
     public static final int DEFAULT_ROUNDS = 6;
     /* To access SharedPreferences settings data, do:
         SharedPreferences settingsPrefs = getSharedPreferences
-            (MainActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+            (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
         settingsPrefs.getInt(GAME_MODE, -1);
         settingsPrefs.getInt(MAX_POINTS, -1);
         settingsPrefs.getInt(MAX_MINUTES, -1);
         settingsPrefs.getInt(MAX_ROUNDS, -1);
      */
 
-    static final private String GAMES = "Games";
-    static final private String COMICS = "Comic Books";
-    static final private String SCI_FI = "Sci Fi";
-    static final private String FANTASY = "Fantasy";
-    static final private String MISCELLANEOUS = "Miscellaneous";
+    static final public String INTENT_TAG = "Picked Questions";
+    static final public String INTENT_COLOR = "Question Color";
+
+    static final public String GAMES = "Games";
+    static final public String COMICS = "Comic Books";
+    static final public String SCI_FI = "Sci Fi";
+    static final public String FANTASY = "Fantasy";
+    static final public String MISCELLANEOUS = "Miscellaneous";
+
 
     private TextView mTV;
     private DBHelper mDbHelper;
@@ -81,57 +78,89 @@ public class MainActivity extends AppCompatActivity {
     private String chosenCategory = GAMES;
     private HashMap<String, Cursor> cursorHashMap;
 
+    View myView;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*
+            General Setup
+         */
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_questions);
 
+        /*
+           SharedPreferences
+         */
         SharedPreferences settingsPrefs = getSharedPreferences
-                (MainActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+                (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
         // initialize settings to defaults if they haven't been initialized yet
         if (settingsPrefs.getInt(GAME_MODE, -1) == -1) {
-            settingsPrefsEditor.putInt(MainActivity.GAME_MODE, MainActivity.POINTS_MODE);
+            settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.POINTS_MODE);
         }
         if (settingsPrefs.getInt(MAX_ROUNDS, -1) == -1) {
-            settingsPrefsEditor.putInt(MainActivity.MAX_ROUNDS, MainActivity.DEFAULT_POINTS);
+            settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, QuestionActivity.DEFAULT_POINTS);
         }
         // if implementing time, uncomment this
         /*
         if (settingsPrefs.getInt(MAX_MINUTES, -1) == -1) {
-            settingsPrefsEditor.putInt(MainActivity.MAX_MINUTES, MainActivity.DEFAULT_MINUTES);
+            settingsPrefsEditor.putInt(QuestionActivity.MAX_MINUTES, QuestionActivity.DEFAULT_MINUTES);
         }
         */
         if (settingsPrefs.getInt(MAX_POINTS, -1) == -1) {
-            settingsPrefsEditor.putInt(MainActivity.MAX_POINTS, MainActivity.DEFAULT_ROUNDS);
+            settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, QuestionActivity.DEFAULT_ROUNDS);
         }
         settingsPrefsEditor.apply();
 
 
-        // Toolbar for settings and stuff
+        /*
+            Toolbar Settings
+         */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button settingsButton = (Button) findViewById(R.id.settingsButton);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent launchSettingsActInt = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(launchSettingsActInt);
-            }
-        });
+        // TODO Re-Implement settings button
+//        Button settingsButton = (Button) findViewById(R.id.settingsButton);
+//        settingsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
+//                startActivity(launchSettingsActInt);
+//            }
+//        });
 
 
+        /*
+            Main Question Database Portion
+         */
+        chosenCategory = getIntent().getStringExtra(INTENT_TAG);
+        myView = this.getWindow().getDecorView();
+        myView.setBackgroundResource(Integer.valueOf(getIntent().getStringExtra(INTENT_COLOR)));
 
         mTV = (TextView) findViewById(R.id.textView);
+
         Button diffquestionButton = (Button) findViewById(R.id.diffquestionButton);
         diffquestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
+                    If this is the last question in the list, shuffle the list
 
+                    Can't move cursor.moveToNext because shallow copy? Need to move the actual
+                    one stored in hashmap
+
+                 */
+                if (!cursorHashMap.get(chosenCategory).moveToNext()) {
+                    cursorHashMap.put(chosenCategory, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
+                            DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[] {chosenCategory}, null, null,
+                            "RANDOM()", null));
+                    cursorHashMap.get(chosenCategory).moveToFirst(); // ALWAYS MOVE THE CURSOR TO THE FIRST POSITION
+
+                    Log.i(TAG, chosenCategory + " category reshuffled");
+                    Toast.makeText(getApplicationContext(),chosenCategory + " category reshuffled", Toast.LENGTH_SHORT).show();
+                }
                 cursor = cursorHashMap.get(chosenCategory);
 
                 if (cursor != null) {
@@ -145,26 +174,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "Bid: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)));
 
                     // Sets TextView Text
-                    String concated_question = cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
+                    String concated_question = chosenCategory + ": \n" + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
                             cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
                     mTV.setText(concated_question);
 
-                    /*
-                    If this is the last question in the list, shuffle the list
 
-                    Can't move cursor.moveToNext because shallow copy? Need to move the actual
-                    one stored in hashmap
-
-                     */
-                    if (!cursorHashMap.get(chosenCategory).moveToNext()) {
-                        cursorHashMap.put(chosenCategory, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
-                                DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[] {chosenCategory}, null, null,
-                                "RANDOM()", null));
-                        cursorHashMap.get(chosenCategory).moveToFirst(); // ALWAYS MOVE THE CURSOR TO THE FIRST POSITION
-
-                        Log.i(TAG, chosenCategory + " category reshuffled");
-                        Toast.makeText(getApplicationContext(),chosenCategory + " category reshuffled", Toast.LENGTH_SHORT).show();
-                    }
                 }
                 else {
                     Log.i(TAG, "Error: Cursor Failed");
@@ -212,8 +226,15 @@ public class MainActivity extends AppCompatActivity {
         for(HashMap.Entry<String, Cursor> entry : cursorHashMap.entrySet()) {
             entry.getValue().moveToFirst();
         }
+        // Sets TextView Text for the first time
+        cursor = cursorHashMap.get(chosenCategory);
+        String concated_question = chosenCategory + ": \n" + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
+                cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
+        mTV.setText(concated_question);
 
-      // baseline implementation for change player dialog
+      /*
+        Dialog for picking Done button
+       */
       Button doneButton = (Button) findViewById(R.id.doneButton);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,33 +259,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Re-Roll for Category");
-                ImageView imageView  = (ImageView) findViewById(R.id.questionImage);
-                Random r = new Random();
-                int category_number = r.nextInt(5);
-                switch(category_number) {
-                    case 0:
-                        chosenCategory = GAMES;
-                        imageView.setBackgroundColor(getResources().getColor(R.color.games));
-                        break;
-                    case 1:
-                        chosenCategory = COMICS;
-                        imageView.setBackgroundColor(getResources().getColor(R.color.comicbooks));
-                        break;
-                    case 2:
-                        chosenCategory = SCI_FI;
-                        imageView.setBackgroundColor(getResources().getColor(R.color.scifi));
-                        break;
-                    case 3:
-                        chosenCategory = FANTASY;
-                        imageView.setBackgroundColor(getResources().getColor(R.color.fantasy));
-                        break;
-                    case 4:
-                        chosenCategory = MISCELLANEOUS;
-                        imageView.setBackgroundColor(getResources().getColor(R.color.miscellaneous));
-                        break;
-                }
-                mTV.setText("Click on Button");
-                Toast.makeText(getApplicationContext(),"Category Changed To: " + chosenCategory, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(QuestionActivity.this, DiceRoller.class);
+                startActivity(intent);
+//                Random r = new Random();
+//                int category_number = r.nextInt(5);
+//                switch(category_number) {
+//                    case 0:
+//                        chosenCategory = GAMES;
+//                        myView.setBackgroundResource(R.color.games);
+//                        break;
+//                    case 1:
+//                        chosenCategory = COMICS;
+//                        myView.setBackgroundResource(R.color.comicbooks);
+//                        break;
+//                    case 2:
+//                        chosenCategory = SCI_FI;
+//                        myView.setBackgroundResource(R.color.scifi);
+//                        break;
+//                    case 3:
+//                        chosenCategory = FANTASY;
+//                        myView.setBackgroundResource(R.color.fantasy);
+//                        break;
+//                    case 4:
+//                        chosenCategory = MISCELLANEOUS;
+//                        myView.setBackgroundResource(R.color.miscellaneous);
+//                        break;
+//                }
+//                // Resets to new question
+//                cursor = cursorHashMap.get(chosenCategory);
+//                String concated_question = chosenCategory + ": " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
+//                        cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
+//                mTV.setText(concated_question);
+//                Toast.makeText(getApplicationContext(),"Category Changed To: " + chosenCategory, Toast.LENGTH_SHORT).show();
             }
         });
     }
