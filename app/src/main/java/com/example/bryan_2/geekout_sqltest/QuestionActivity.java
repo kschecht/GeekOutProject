@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -96,6 +97,7 @@ public class QuestionActivity extends AppCompatActivity {
         SharedPreferences settingsPrefs = getSharedPreferences
                 (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
+
         // initialize settings to defaults if they haven't been initialized yet
         if (settingsPrefs.getInt(GAME_MODE, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.POINTS_MODE);
@@ -122,14 +124,14 @@ public class QuestionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // TODO Re-Implement settings button
-//        Button settingsButton = (Button) findViewById(R.id.settingsButton);
-//        settingsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
-//                startActivity(launchSettingsActInt);
-//            }
-//        });
+        ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
+                startActivity(launchSettingsActInt);
+            }
+        });
 
 
         /*
@@ -261,36 +263,6 @@ public class QuestionActivity extends AppCompatActivity {
                 Log.i(TAG, "Re-Roll for Category");
                 Intent intent = new Intent(QuestionActivity.this, DiceRoller.class);
                 startActivity(intent);
-//                Random r = new Random();
-//                int category_number = r.nextInt(5);
-//                switch(category_number) {
-//                    case 0:
-//                        chosenCategory = GAMES;
-//                        myView.setBackgroundResource(R.color.games);
-//                        break;
-//                    case 1:
-//                        chosenCategory = COMICS;
-//                        myView.setBackgroundResource(R.color.comicbooks);
-//                        break;
-//                    case 2:
-//                        chosenCategory = SCI_FI;
-//                        myView.setBackgroundResource(R.color.scifi);
-//                        break;
-//                    case 3:
-//                        chosenCategory = FANTASY;
-//                        myView.setBackgroundResource(R.color.fantasy);
-//                        break;
-//                    case 4:
-//                        chosenCategory = MISCELLANEOUS;
-//                        myView.setBackgroundResource(R.color.miscellaneous);
-//                        break;
-//                }
-//                // Resets to new question
-//                cursor = cursorHashMap.get(chosenCategory);
-//                String concated_question = chosenCategory + ": " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
-//                        cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
-//                mTV.setText(concated_question);
-//                Toast.makeText(getApplicationContext(),"Category Changed To: " + chosenCategory, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -353,7 +325,8 @@ public class QuestionActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+//            Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
+//            startActivity(launchSettingsActInt);
         }
 
         return super.onOptionsItemSelected(item);
