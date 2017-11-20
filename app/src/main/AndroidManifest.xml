@@ -37,6 +37,24 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".BiddingActivity"
+            android:label="Geekout"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!--
+            I'm not sure anything but the root activity should have these intent filters,
+            but keep them around for now for development reasons
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".NamingActivity"
+            android:label="Geekout"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
 
     </application>
 

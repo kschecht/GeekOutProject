@@ -14,4 +14,10 @@
     <string name="reroll">Re-Roll</string>
     <string name="differentQuestion">Different Question</string>
     <string name="settings_title">Settings</string>
+    <string name="default_team_name">The Placeholders</string>
+    <string name="default_bid">0</string>
+    <string name="bid">Bid</string>
+    <string name="pass">Pass</string>
+    <string name="default_question">This is where the current question will be displayed</string>
+    <string name="timeRemaining">Time remaining: </string>
 </resources>

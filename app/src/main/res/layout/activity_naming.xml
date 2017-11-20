@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.bryan_2.geekout_sqltest.BiddingActivity">
+
+        <TextView
+            android:id="@+id/namingQuestionView"
+            android:text="@string/default_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/namingTeamView"
+            android:text="@string/default_team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/namingQuestionView"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/currentScoreView"
+            android:text="0"
+            android:layout_below="@id/namingTeamView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Space
+            android:id="@+id/namingSpacer"
+            android:layout_below="@id/currentBidView"
+            android:layout_centerHorizontal="true"
+            android:layout_width="1dp"
+            android:layout_height="30dp"/>
+
+        <!--
+             TODO Need to find a better image.  Couldn't find a minus sign in default drawables.  Might need to include our own
+         -->
+        <ImageButton
+            android:id="@+id/decrementScoreButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/currentScoreView"
+            android:layout_toLeftOf="@+id/namingSpacer"
+            app:srcCompat="@android:drawable/ic_input_delete" />
+
+        <ImageButton
+            android:id="@+id/incrementScoreButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/currentScoreView"
+            android:layout_toRightOf="@+id/namingSpacer"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <TextView
+            android:id="@+id/namingTimerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/incrementScoreButton"
+            android:layout_centerHorizontal="true"
+            android:text="@string/timeRemaining"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
