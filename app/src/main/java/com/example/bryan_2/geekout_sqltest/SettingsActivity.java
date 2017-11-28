@@ -18,6 +18,9 @@ public class SettingsActivity extends Activity {
     private RadioGroup mGameModeRadioGroup;
     private EditText mPointLimitText;
     private EditText mRoundLimitText;
+    private int originalGameMode;
+    private int originalRoundLimit;
+    private int originalPointLimit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,9 +39,15 @@ public class SettingsActivity extends Activity {
         // Settings have not been initialized yet, should not happen here
         if (settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.POINTS_MODE);
+            originalGameMode = QuestionActivity.POINTS_MODE;
+        } else {
+            originalGameMode = settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1);
         }
         if (settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, QuestionActivity.DEFAULT_ROUNDS);
+            originalRoundLimit = QuestionActivity.DEFAULT_ROUNDS;
+        } else {
+            originalGameMode = settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, -1);
         }
         // if implementing time, uncomment this
         /*
@@ -48,6 +57,9 @@ public class SettingsActivity extends Activity {
         */
         if (settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, QuestionActivity.DEFAULT_POINTS);
+            originalPointLimit = QuestionActivity.DEFAULT_POINTS;
+        } else {
+            originalPointLimit = settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1);
         }
         // apply changes to create defaults if necessary
         settingsPrefsEditor.apply();
@@ -58,6 +70,12 @@ public class SettingsActivity extends Activity {
         cancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // restore original prefs
+                settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, originalGameMode);
+                settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, originalRoundLimit);
+                settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, originalPointLimit);
+                settingsPrefsEditor.apply();
+
                 finish();
             }
         });
@@ -77,6 +95,7 @@ public class SettingsActivity extends Activity {
                 // TODO Only remember the value if the user pressed update
                 // Case- If you change the value then press cancel, the value will remain even
                 // if the app is closed and restarted.
+                // THIS SHOULD BE FIXED NOW
                 
                 // set shared prefs point limit
                 String max_points_string = mPointLimitText.getText().toString();
