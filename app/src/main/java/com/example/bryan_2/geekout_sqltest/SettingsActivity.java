@@ -71,9 +71,12 @@ public class SettingsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // restore original prefs
+                Log.d("originalRoundLimit", ""+originalRoundLimit);
                 settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, originalGameMode);
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, originalRoundLimit);
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, originalPointLimit);
+                mPointLimitText.setText(String.valueOf(originalPointLimit));
+                mRoundLimitText.setText(String.valueOf(originalRoundLimit));
                 settingsPrefsEditor.apply();
 
                 finish();
@@ -95,7 +98,7 @@ public class SettingsActivity extends Activity {
                 // TODO Only remember the value if the user pressed update
                 // Case- If you change the value then press cancel, the value will remain even
                 // if the app is closed and restarted.
-                // THIS SHOULD BE FIXED NOW
+                // gamemode is fixed, round/point limit still bad, update not working
                 
                 // set shared prefs point limit
                 String max_points_string = mPointLimitText.getText().toString();
