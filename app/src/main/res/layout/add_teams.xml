@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.bryan_2.geekout_sqltest.SettingsActivity">
+
+    <TextView
+        android:id="@+id/settingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/rerollButton"
+        android:layout_marginBottom="91dp"
+        android:text="Add Teams"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+
+
+    TextView
+        android:id="@+id/pointLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/point_limit"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/teamNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Team 1"
+        android:layout_marginLeft="8dp"
+        android:inputType="number" />
+
+
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/removeTeamButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:text="Remove Team"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/doneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:text="@string/done"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+
+        <Button
+            android:id="@+id/addTeamButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/doneButton"
+            android:layout_alignBottom="@+id/doneButton"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:text="Add Team" />
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
