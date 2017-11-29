@@ -63,6 +63,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     static final public String INTENT_TAG = "Picked Questions";
     static final public String INTENT_COLOR = "Question Color";
+    static final public String INTENT_BIDDING = "Bidding";
     static final public String STATE_USED_QUESTIONS = "used questions";
 
     static final public String GAMES = "Games";
@@ -219,6 +220,7 @@ public class QuestionActivity extends AppCompatActivity {
 
                 // Starts Bidding Activity
                 Intent intent = new Intent(QuestionActivity.this, BiddingActivity.class);
+                intent.putExtra(INTENT_BIDDING, String.valueOf(mTV.getText()));
                 startActivity(intent);
             }
         });
