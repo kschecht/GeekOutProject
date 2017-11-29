@@ -133,12 +133,16 @@ public class BiddingActivity extends Activity {
         decrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 currentBid--;
 
                 // Can't bid less than the minimum for the round
                 if (currentBid < minimumBid)
                     currentBid = minimumBid;
                 // Can't bid less that the previous team
+                // TODO Why is previousBid != minimumBid there?
+                // TODO leads to a weird case: Team 1 bet minimum, team 2 can then decrease their bid
+                // to the minimum.
                 else if (currentBid <= previousBid && previousBid != minimumBid)
                     currentBid = previousBid+1;
 
@@ -205,5 +209,13 @@ public class BiddingActivity extends Activity {
             return biddingTeams.get(0);
 
         return biddingTeams.get(index);
+    }
+
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+
     }
 }

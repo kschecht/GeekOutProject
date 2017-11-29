@@ -77,7 +77,7 @@ public class SettingsActivity extends Activity {
                 // TODO Only remember the value if the user pressed update
                 // Case- If you change the value then press cancel, the value will remain even
                 // if the app is closed and restarted.
-                
+
                 // set shared prefs point limit
                 String max_points_string = mPointLimitText.getText().toString();
                 String max_rounds_string = mRoundLimitText.getText().toString();
