@@ -109,4 +109,12 @@ public class NamingActivity extends Activity {
 
         timer.start();
     }
+
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+
+    }
 }

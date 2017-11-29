@@ -98,6 +98,7 @@ public class SettingsActivity extends Activity {
                 // TODO Only remember the value if the user pressed update
                 // Case- If you change the value then press cancel, the value will remain even
                 // if the app is closed and restarted.
+
                 // gamemode is fixed, round/point limit still bad, update not working
                 
                 // set shared prefs point limit

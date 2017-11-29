@@ -26,6 +26,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -62,6 +63,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     static final public String INTENT_TAG = "Picked Questions";
     static final public String INTENT_COLOR = "Question Color";
+    static final public String STATE_USED_QUESTIONS = "used questions";
 
     static final public String GAMES = "Games";
     static final public String COMICS = "Comic Books";
@@ -78,9 +80,9 @@ public class QuestionActivity extends AppCompatActivity {
     private DialogFragment mDialog;
     private String chosenCategory = GAMES;
     private HashMap<String, Cursor> cursorHashMap;
+    private ArrayList<String> usedQuestions;
 
-    View myView;
-
+    private View myView;
 
 
     @Override
@@ -123,7 +125,7 @@ public class QuestionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // TODO Re-Implement settings button
+        // TODO remove so we don't have duplicate settings buttons
         ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,48 +145,24 @@ public class QuestionActivity extends AppCompatActivity {
 
         mTV = (TextView) findViewById(R.id.textView);
 
+        // Restore used question list
+        // Check whether we're recreating a previously destroyed instance
+        if (savedInstanceState != null) {
+            usedQuestions = savedInstanceState.getStringArrayList(STATE_USED_QUESTIONS);
+        } else {
+            if (usedQuestions == null) {
+                usedQuestions = new ArrayList<String>();
+            }
+
+
+        }
+
+
         Button diffquestionButton = (Button) findViewById(R.id.diffquestionButton);
         diffquestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                    If this is the last question in the list, shuffle the list
-
-                    Can't move cursor.moveToNext because shallow copy? Need to move the actual
-                    one stored in hashmap
-
-                 */
-                if (!cursorHashMap.get(chosenCategory).moveToNext()) {
-                    cursorHashMap.put(chosenCategory, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
-                            DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[] {chosenCategory}, null, null,
-                            "RANDOM()", null));
-                    cursorHashMap.get(chosenCategory).moveToFirst(); // ALWAYS MOVE THE CURSOR TO THE FIRST POSITION
-
-                    Log.i(TAG, chosenCategory + " category reshuffled");
-                    Toast.makeText(getApplicationContext(),chosenCategory + " category reshuffled", Toast.LENGTH_SHORT).show();
-                }
-                cursor = cursorHashMap.get(chosenCategory);
-
-                if (cursor != null) {
-                    Log.i(TAG, "Cursor Succeeded");
-                    Log.i(TAG, "Post-Count: " + cursor.getCount());
-                    Log.i(TAG, DatabaseUtils.dumpCursorToString(cursor));
-
-
-                    Log.i(TAG, "Category: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_CATEGORY)));
-                    Log.i(TAG, "Name: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME)));
-                    Log.i(TAG, "Bid: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)));
-
-                    // Sets TextView Text
-                    String concated_question = chosenCategory + ": \n" + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
-                            cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
-                    mTV.setText(concated_question);
-
-
-                }
-                else {
-                    Log.i(TAG, "Error: Cursor Failed");
-                }
+                mTV.setText(query_question());
             }
         });
 
@@ -192,69 +170,61 @@ public class QuestionActivity extends AppCompatActivity {
         mDbHelper = new DBHelper(this);
 
         // start with an empty database
-        // TODO REMOVE THIS
         clearAll();
 
         // Insert records
         insertQuestions();
 
 
-		
-      
         // Creating cursors for the five main categories and randomly organizing their contents
         cursorHashMap = new HashMap<String, Cursor>();
-
-        cursorHashMap.put(GAMES, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
-                DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[] {GAMES}, null, null,
-                "RANDOM()", null));
-        cursorHashMap.put(COMICS, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
-                DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[] {COMICS}, null, null,
-                "RANDOM()", null));
-        cursorHashMap.put(SCI_FI, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
-                DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[] {SCI_FI}, null, null,
-                "RANDOM()", null));
-        cursorHashMap.put(FANTASY, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
-                DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[] {FANTASY}, null, null,
-                "RANDOM()", null));
-        cursorHashMap.put(MISCELLANEOUS, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
-                DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[] {MISCELLANEOUS}, null, null,
-                "RANDOM()", null));
+        for (String cat : new String[]{GAMES, COMICS, SCI_FI, FANTASY, MISCELLANEOUS}) {
+            cursorHashMap.put(cat, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
+                    DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[]{cat}, null, null,
+                    "RANDOM()", null));
+        }
 
         /*
          Moves each cursor in the hashmap to the first position in the list of questions
 
           EXTREMELY IMPORTANT: Must always move cursor to the front
           */
-        for(HashMap.Entry<String, Cursor> entry : cursorHashMap.entrySet()) {
+        for (HashMap.Entry<String, Cursor> entry : cursorHashMap.entrySet()) {
             entry.getValue().moveToFirst();
         }
         // Sets TextView Text for the first time
-        cursor = cursorHashMap.get(chosenCategory);
-        String concated_question = chosenCategory + ": \n" + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
-                cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
-        mTV.setText(concated_question);
+        mTV.setText(query_question());
+
 
       /*
         Dialog for picking Done button
        */
-      Button doneButton = (Button) findViewById(R.id.doneButton);
+        Button doneButton = (Button) findViewById(R.id.doneButton);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Done with picking");
 
+                // TODO Figure out a way to wait for user response to dialog before proceeding
                 // Create a new AlertDialogFragment
                 mDialog = PlayerChangeDialogFragment.newInstance();
 
                 // Show AlertDialogFragment
                 mDialog.show(getFragmentManager(), "Alert");
+
+                // Adds picked question to the used question list
+                Log.i("USED", String.valueOf(mTV.getText()));
+                usedQuestions.add(String.valueOf(mTV.getText()));
+
+
+                // Starts Bidding Activity
+                Intent intent = new Intent(QuestionActivity.this, BiddingActivity.class);
+                startActivity(intent);
             }
         });
 
         /*
-            Stand in method for picking a new category
-            TODO - Allow users to reroll if they don't like the category for some reason
-
+            Re-Roll the category
          */
         Button rerollButton = (Button) findViewById(R.id.rerollButton);
         rerollButton.setOnClickListener(new View.OnClickListener() {
@@ -267,6 +237,67 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
+    /*
+        returns a question from the selected category picked from dice roller
+     */
+    private String query_question() {
+        cursor = cursorHashMap.get(chosenCategory);
+        if (cursor == null) {
+            Log.i(TAG, "Cursor is null");
+            return "Null String: Category Empty";
+        }
+        else {
+            String result = chosenCategory + ": \n" + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
+                    cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
+
+            Log.i(TAG, DatabaseUtils.dumpCursorToString(cursor));
+            Log.i(TAG, "Category: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_CATEGORY)));
+            Log.i(TAG, "Name: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME)));
+            Log.i(TAG, "Bid: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)));
+
+            // Makes sure question isn't used already
+            int max_count = cursor.getCount();
+            int temp_count = 0;
+            while (usedQuestions.contains(result) && temp_count < max_count) {
+                if (!nextQuestion()) {
+                    temp_count++;
+                    nextQuestion();
+                }
+                cursor = cursorHashMap.get(chosenCategory);
+                if (temp_count >= max_count)
+                    result = "No new questions";
+                else
+                    result = chosenCategory + ": \n" + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
+                        cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
+            }
+            nextQuestion(); // Preps the next question
+
+            Log.i(TAG, "Query_Question reulst: " + result);
+
+            return result;
+        }
+    }
+
+    /*
+        Moves the cursor of the appropriate category list to the next question so the question
+        is ready to be queried. Shuffles the deck if the user has gone through all the questions,
+        but hasn't actually picked any.
+     */
+    private boolean nextQuestion() {
+        // Shuffles if at the end of question list
+        if (!cursorHashMap.get(chosenCategory).moveToNext()) {
+            cursorHashMap.put(chosenCategory, mDbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME,
+                    DBHelper.columns, mDbHelper.QUESTION_CATEGORY + "=?", new String[]{chosenCategory}, null, null,
+                    "RANDOM()", null));
+            cursorHashMap.get(chosenCategory).moveToFirst(); // ALWAYS MOVE THE CURSOR TO THE FIRST POSITION
+
+            Log.i(TAG, chosenCategory + " category reshuffled");
+            Toast.makeText(getApplicationContext(), chosenCategory + " category reshuffled", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else
+            return true;
+    }
     // Insert several question records
     private void insertQuestions() {
 
@@ -289,11 +320,6 @@ public class QuestionActivity extends AppCompatActivity {
             while ((line = buffer.readLine()) != null) {
                 String[] colums = line.split(",");
 
-//                Uncomment and changed columns.length if you want to skip bad csv rows
-//                if (colums.length != 4) {
-//                    Log.d("CSVParser", "Skipping Bad CSV Row");
-//                    continue;
-//                }
 
                 // Inserts the data into the database
                 ContentValues cv = new ContentValues();
@@ -325,11 +351,26 @@ public class QuestionActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-//            Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
-//            startActivity(launchSettingsActInt);
+
+            Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
+            startActivity(launchSettingsActInt);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+        Saves used questions
+
+     */
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putStringArrayList(STATE_USED_QUESTIONS, usedQuestions);
+
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     // Delete all records
@@ -347,6 +388,14 @@ public class QuestionActivity extends AppCompatActivity {
         mDbHelper.deleteDatabase();
 
         super.onDestroy();
+
+    }
+
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
 
     }
 }
