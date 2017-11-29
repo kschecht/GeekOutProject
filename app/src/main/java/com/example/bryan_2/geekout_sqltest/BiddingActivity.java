@@ -62,6 +62,7 @@ public class BiddingActivity extends Activity {
         teamName = findViewById(R.id.teamNameView);
         currentBidView = findViewById(R.id.currentBidView);
 
+
         // TODO get the list of teams, current question, question minimum bet... somewhere
         // Until we implement a way to pass that stuff around, use hardcoded debug values
         allTeams = new ArrayList<String>();
@@ -187,7 +188,7 @@ public class BiddingActivity extends Activity {
         leadingTeam = biddingTeam; // To prevent the case where everyone passes without bidding, the first team has to bet at least the minimum
 
         // Don't bother holding on to this view.  We need to set it once and never interact again
-        question = "Some default question.";
+        question = getIntent().getStringExtra(QuestionActivity.INTENT_BIDDING);
         questionView.setText(question);
 
 
