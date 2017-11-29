@@ -4,11 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
 
-    <color name="games">#f4514b</color>
-    <color name="comicbooks">#03A9F4</color>
-    <color name="scifi">#ffff40</color>
-    <color name="fantasy">#5ef157</color>
-    <color name="miscellaneous">#7c7c7c</color>
+    <color name="games">#EF9A9A</color>
+    <color name="comicbooks">#E3F2FD</color>
+    <color name="scifi">#FFF9C4</color>
+    <color name="fantasy">#C8E6C9</color>
+    <color name="miscellaneous">#F5F5F5</color>
 
     <color name="red">#F44336</color>
     <color name="yellow">#FFEB3B</color>

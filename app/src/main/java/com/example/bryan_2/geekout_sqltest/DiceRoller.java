@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -43,13 +44,15 @@ public class DiceRoller extends AppCompatActivity {
         rollDice.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) {
+                TextView games = (TextView)findViewById(R.id.cat_name);
 
                 // TODO Change dice number if we need more than 5 categories
                 numberGenerated = randomNumber.nextInt(5)+1;
 
                 // Games
                 if(numberGenerated==1) {
-                    diceImage.setImageResource(R.drawable.dice_games);
+                    games.setText("Games");
+                    diceImage.setImageResource(R.drawable.newgames);
                     myView.setBackgroundResource(R.color.games);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +69,8 @@ public class DiceRoller extends AppCompatActivity {
                 }
                 // Sci Fi
                 else if(numberGenerated==2) {
-                    diceImage.setImageResource(R.drawable.dice_scifi);
+                    games.setText("Science-Fiction");
+                    diceImage.setImageResource(R.drawable.sfiction);
                     myView.setBackgroundResource(R.color.scifi);
 
 
@@ -85,7 +89,8 @@ public class DiceRoller extends AppCompatActivity {
                 }
                 // Fantasy
                 else if(numberGenerated==3) {
-                    diceImage.setImageResource(R.drawable.dice_fantasy);
+                    games.setText("Fantasy");
+                    diceImage.setImageResource(R.drawable.fantasy);
                     myView.setBackgroundResource(R.color.fantasy);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +107,8 @@ public class DiceRoller extends AppCompatActivity {
 
                 // Miscellaneous
                 else if(numberGenerated==4) {
-                    diceImage.setImageResource(R.drawable.dice_misc);
+                    games.setText("Miscellaneous");
+                    diceImage.setImageResource(R.drawable.miscellaneous);
                     myView.setBackgroundResource(R.color.miscellaneous);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -118,7 +124,8 @@ public class DiceRoller extends AppCompatActivity {
 
                 // Comic Books
                 else if(numberGenerated==5) {
-                    diceImage.setImageResource(R.drawable.dice_comics);
+                    games.setText("Comic Books");
+                    diceImage.setImageResource(R.drawable.comic);
                     myView.setBackgroundResource(R.color.comicbooks);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
