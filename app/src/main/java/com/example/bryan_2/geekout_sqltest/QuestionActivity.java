@@ -125,7 +125,7 @@ public class QuestionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // TODO Re-Implement settings button
+        // TODO remove so we don't have duplicate settings buttons
         ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,11 +152,6 @@ public class QuestionActivity extends AppCompatActivity {
         } else {
             if (usedQuestions == null) {
                 usedQuestions = new ArrayList<String>();
-                usedQuestions.add("Games: \n4 Characters from Mortal Kombat"); //TODO remove this line
-                usedQuestions.add("Games: \n2 Videogames in which you can play as the villain");
-                usedQuestions.add("Games: \n2 Board games with a sports theme");
-//                usedQuestions.add("Games: \n4 Collectible card games");
-//                usedQuestions.add("Games: \n4 Named villains in videogames");
             }
 
 
@@ -175,7 +170,6 @@ public class QuestionActivity extends AppCompatActivity {
         mDbHelper = new DBHelper(this);
 
         // start with an empty database
-        // TODO REMOVE THIS
         clearAll();
 
         // Insert records
@@ -200,32 +194,6 @@ public class QuestionActivity extends AppCompatActivity {
         }
         // Sets TextView Text for the first time
         mTV.setText(query_question());
-        /*
-                Checking if in usedQuestion
-
-                while loop
-                If so
-                move cursor
-                assign cursor
-                make new string
-
-                edge case:
-                1. Nothing left in category
-                2. Cursor reaches the end and needs to reshuffle
-
-                // Why can't we just delete queried questions?
-                1. back button issue means the question will remain deleted
-                    - can be overriden
-                2. What if we use all the questions?
-                    - Eliminate category?
-                3. Would be nice to remember which question each team got
-                4. Would have to reload all the questions
-                5. Won't remember used questions when onDestroyed is called
-
-
-
-
-        */
 
 
       /*
@@ -245,7 +213,6 @@ public class QuestionActivity extends AppCompatActivity {
                 mDialog.show(getFragmentManager(), "Alert");
 
                 // Adds picked question to the used question list
-                // TODO Remove question if back button pressed on bidding activity
                 Log.i("USED", String.valueOf(mTV.getText()));
                 usedQuestions.add(String.valueOf(mTV.getText()));
 
@@ -257,7 +224,7 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         /*
-            TODO - Remove? Seems like the back button accomplishes this
+            Re-Roll the category
          */
         Button rerollButton = (Button) findViewById(R.id.rerollButton);
         rerollButton.setOnClickListener(new View.OnClickListener() {
@@ -270,16 +237,10 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
+    /*
+        returns a question from the selected category picked from dice roller
+     */
     private String query_question() {
-//        Log.i(TAG, "Cursor Succeeded");
-//        Log.i(TAG, "Post-Count: " + cursor.getCount());
-//        Log.i(TAG, DatabaseUtils.dumpCursorToString(cursor));
-//
-//
-//        Log.i(TAG, "Category: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_CATEGORY)));
-//        Log.i(TAG, "Name: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME)));
-//        Log.i(TAG, "Bid: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)));
-
         cursor = cursorHashMap.get(chosenCategory);
         if (cursor == null) {
             Log.i(TAG, "Cursor is null");
@@ -294,16 +255,20 @@ public class QuestionActivity extends AppCompatActivity {
             Log.i(TAG, "Name: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME)));
             Log.i(TAG, "Bid: " + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)));
 
-            // Doesn't work because question still in there, they just get randomized
-            while (usedQuestions.contains(result)) {
+            // Makes sure question isn't used already
+            int max_count = cursor.getCount();
+            int temp_count = 0;
+            while (usedQuestions.contains(result) && temp_count < max_count) {
                 if (!nextQuestion()) {
-                    result = "Null String: All questions used";
+                    temp_count++;
+                    nextQuestion();
                 }
-                else {
+                cursor = cursorHashMap.get(chosenCategory);
+                if (temp_count >= max_count)
+                    result = "No new questions";
+                else
                     result = chosenCategory + ": \n" + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
-                            cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
-                }
-
+                        cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
             }
             nextQuestion(); // Preps the next question
 
@@ -313,6 +278,11 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+    /*
+        Moves the cursor of the appropriate category list to the next question so the question
+        is ready to be queried. Shuffles the deck if the user has gone through all the questions,
+        but hasn't actually picked any.
+     */
     private boolean nextQuestion() {
         // Shuffles if at the end of question list
         if (!cursorHashMap.get(chosenCategory).moveToNext()) {
@@ -350,11 +320,6 @@ public class QuestionActivity extends AppCompatActivity {
             while ((line = buffer.readLine()) != null) {
                 String[] colums = line.split(",");
 
-//                Uncomment and changed columns.length if you want to skip bad csv rows
-//                if (colums.length != 4) {
-//                    Log.d("CSVParser", "Skipping Bad CSV Row");
-//                    continue;
-//                }
 
                 // Inserts the data into the database
                 ContentValues cv = new ContentValues();
@@ -386,9 +351,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            // TODO get rid of Settings button and use this instead
-//            Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
-//            startActivity(launchSettingsActInt);
+
+            Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
+            startActivity(launchSettingsActInt);
         }
 
         return super.onOptionsItemSelected(item);
