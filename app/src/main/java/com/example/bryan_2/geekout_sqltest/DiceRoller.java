@@ -26,6 +26,8 @@ public class DiceRoller extends AppCompatActivity {
         //dice roller activity
         setContentView(R.layout.dice_roller);
 
+
+
         rollDice = (Button) findViewById(R.id.roll_button);
 
         questionButton = (Button) findViewById(R.id.questionButton);
@@ -33,6 +35,7 @@ public class DiceRoller extends AppCompatActivity {
         diceImage = (ImageView) findViewById(R.id.dice_Image);
 
         myView = this.getWindow().getDecorView();
+        myView.setBackgroundResource(R.color.geekout);
 
         randomNumber = new Random();
 
@@ -46,7 +49,7 @@ public class DiceRoller extends AppCompatActivity {
 
                 // Games
                 if(numberGenerated==1) {
-                    diceImage.setImageResource(R.drawable.dice_six_faces_one);
+                    diceImage.setImageResource(R.drawable.dice_games);
                     myView.setBackgroundResource(R.color.games);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +66,7 @@ public class DiceRoller extends AppCompatActivity {
                 }
                 // Sci Fi
                 else if(numberGenerated==2) {
-                    diceImage.setImageResource(R.drawable.dice_six_faces_two);
+                    diceImage.setImageResource(R.drawable.dice_scifi);
                     myView.setBackgroundResource(R.color.scifi);
 
 
@@ -82,7 +85,7 @@ public class DiceRoller extends AppCompatActivity {
                 }
                 // Fantasy
                 else if(numberGenerated==3) {
-                    diceImage.setImageResource(R.drawable.dice_six_faces_three);
+                    diceImage.setImageResource(R.drawable.dice_fantasy);
                     myView.setBackgroundResource(R.color.fantasy);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +102,7 @@ public class DiceRoller extends AppCompatActivity {
 
                 // Miscellaneous
                 else if(numberGenerated==4) {
-                    diceImage.setImageResource(R.drawable.dice_six_faces_four);
+                    diceImage.setImageResource(R.drawable.dice_misc);
                     myView.setBackgroundResource(R.color.miscellaneous);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -115,7 +118,7 @@ public class DiceRoller extends AppCompatActivity {
 
                 // Comic Books
                 else if(numberGenerated==5) {
-                    diceImage.setImageResource(R.drawable.dice_six_faces_five);
+                    diceImage.setImageResource(R.drawable.dice_comics);
                     myView.setBackgroundResource(R.color.comicbooks);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override

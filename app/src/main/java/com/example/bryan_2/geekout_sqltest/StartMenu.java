@@ -16,13 +16,16 @@ public class StartMenu extends Activity {
 
 
     Button questionButton;
+    View myView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //dice roller activity
         setContentView(R.layout.start_menu);
 
         settingsButton = (Button) findViewById(R.id.settings_button);
         questionButton = (Button) findViewById(R.id.start_Button);
+        myView = this.getWindow().getDecorView();
+
+        myView.setBackgroundResource(R.color.geekout);
 
 
         settingsButton.setOnClickListener(new View.OnClickListener(){

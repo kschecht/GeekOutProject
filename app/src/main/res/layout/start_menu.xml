@@ -14,7 +14,7 @@
         android:layout_height="150dp"
         android:id="@+id/start_Image"
 
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@drawable/geekout_logo"
         android:scaleType="centerInside"
         android:layout_gravity="center_horizontal"
 

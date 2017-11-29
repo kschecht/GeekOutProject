@@ -15,10 +15,13 @@ public class AddTeamsActivity extends Activity {
     Button addTeam;
     Button removeTeam;
     Button done;
+    View myView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //dice roller activity
         setContentView(R.layout.add_teams);
+        myView = this.getWindow().getDecorView();
+
+        myView.setBackgroundResource(R.color.geekout);
 
 
         done = (Button) findViewById(R.id.doneButton);

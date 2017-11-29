@@ -27,7 +27,9 @@ public class SettingsActivity extends Activity {
         Log.i("TAG", "Started Settings activity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        View myView = this.getWindow().getDecorView();
 
+        myView.setBackgroundResource(R.color.geekout);
         mGameModeRadioGroup = (RadioGroup) findViewById(R.id.gameModeRadioButtons);
         mPointLimitText = (EditText) findViewById(R.id.pointLimitEditText);
         mRoundLimitText = (EditText) findViewById(R.id.roundLimitEditText);
