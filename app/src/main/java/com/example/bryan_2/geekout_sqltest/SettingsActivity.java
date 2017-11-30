@@ -131,6 +131,8 @@ public class SettingsActivity extends Activity {
         cancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO updating and then cancelling results in original original settings
+
                 // restore original prefs
                 Log.d("originalRoundLimit", ""+originalRoundLimit);
                 settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, originalGameMode);
