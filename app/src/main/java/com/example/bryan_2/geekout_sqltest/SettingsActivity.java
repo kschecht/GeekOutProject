@@ -155,12 +155,6 @@ public class SettingsActivity extends Activity {
                     // rounds limit
                     settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.ROUND_MODE);
                 }
-
-                // TODO Only remember the value if the user pressed update
-                // Case- If you change the value then press cancel, the value will remain even
-                // if the app is closed and restarted.
-
-                // gamemode is fixed, round/point limit still bad, update not working
                 
                 // set shared prefs point limit
                 String max_points_string = mPointLimitText.getText().toString();
