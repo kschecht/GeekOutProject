@@ -20,4 +20,6 @@
     <string name="pass">Pass</string>
     <string name="default_question">This is where the current question will be displayed</string>
     <string name="timeRemaining">Time remaining: </string>
+    <string name="num_teams_title">How many teams are playing?</string>
+    <string name="team_num">2</string>
 </resources>
