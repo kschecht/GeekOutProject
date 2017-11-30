@@ -72,6 +72,9 @@ public class SettingsActivity extends Activity {
         }
         // apply changes to create defaults if necessary
         settingsPrefsEditor.apply();
+        if (settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1) == QuestionActivity.ROUND_MODE) {
+            mGameModeRadioGroup.check(R.id.roundsLimit);
+        }
         mPointLimitText.setText(String.valueOf(settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
         mRoundLimitText.setText(String.valueOf(settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, -1)));
 
@@ -142,7 +145,7 @@ public class SettingsActivity extends Activity {
         });
 
         final Button updateButton = (Button) findViewById(R.id.updateButton);
-        cancelButton.setOnClickListener(new OnClickListener() {
+        updateButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // set shared prefs game mode
