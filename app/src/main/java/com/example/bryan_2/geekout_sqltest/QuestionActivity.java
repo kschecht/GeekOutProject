@@ -37,18 +37,10 @@ public class QuestionActivity extends AppCompatActivity {
     // SharedPreferences GameMode
     public static final String GAME_MODE = "GameMode";
     public static final int POINTS_MODE = 0;
-    // if implementing time, uncomment this
-    //public static final int TIME_MODE = 1;
     public static final int ROUND_MODE = 2;
     // SharedPreferences game point limit (if POINTS_MODE)
     public static final String MAX_POINTS = "MaxPoints";
     public static final int DEFAULT_POINTS = 5;
-    // SharedPreferences game time limit (if TIME_MODE)
-    // if implementing time, uncomment this
-    /*
-    public static final String MAX_MINUTES = "MaxMinutes";
-    public static final int DEFAULT_MINUTES = 10;
-    */
     // SharedPreferences game round limit (if ROUND_MODE)
     public static final String MAX_ROUNDS = "MaxRounds";
     public static final int DEFAULT_ROUNDS = 6;
@@ -206,12 +198,14 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.i(TAG, "Done with picking");
 
-                // TODO Figure out a way to wait for user response to dialog before proceeding
+                /*// TODO Figure out a way to wait for user response to dialog before proceeding
                 // Create a new AlertDialogFragment
                 mDialog = PlayerChangeDialogFragment.newInstance();
-
+                // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+                Bundle alertMessageBundle = new Bundle();
+                alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE, "Pass the phone to "+biddingTeam);
                 // Show AlertDialogFragment
-                mDialog.show(getFragmentManager(), "Alert");
+                mDialog.show(getFragmentManager(), "Alert");*/
 
                 // Adds picked question to the used question list
                 Log.i("USED", String.valueOf(mTV.getText()));

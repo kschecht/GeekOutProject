@@ -1,6 +1,7 @@
 package com.example.bryan_2.geekout_sqltest;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +36,7 @@ public class BiddingActivity extends Activity {
     TextView teamName;
     TextView currentBidView;
     TextView questionView;
+    private DialogFragment mDialog;
 
     // NOTE: This code is assuming that team names are unique
     HashMap<String, Integer> score;
@@ -91,6 +93,15 @@ public class BiddingActivity extends Activity {
                 biddingTeam = getNextTeam();
 
                 // TODO "pass phone" pop-up
+                // Create a new AlertDialogFragment
+                mDialog = PlayerChangeDialogFragment.newInstance();
+                // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+                Bundle alertMessageBundle = new Bundle();
+                alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
+                        "Pass the phone to "+biddingTeam);
+                mDialog.setArguments(alertMessageBundle);
+                // Show AlertDialogFragment
+                mDialog.show(getFragmentManager(), "Alert");
 
                 updateViews();
             }
@@ -104,6 +115,15 @@ public class BiddingActivity extends Activity {
                 if (biddingTeams.size() == 2)
                 {
                     // TODO "pass the phone" pop-up
+                    // Create a new AlertDialogFragment
+                    mDialog = PlayerChangeDialogFragment.newInstance();
+                    // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+                    Bundle alertMessageBundle = new Bundle();
+                    alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
+                            "Pass the phone to "+leadingTeam);
+                    mDialog.setArguments(alertMessageBundle);
+                    // Show AlertDialogFragment
+                    mDialog.show(getFragmentManager(), "Alert");
 
                     Intent namingIntent = new Intent(BiddingActivity.this, NamingActivity.class);
                     namingIntent.putExtra(QUESTION_KEY, question);
@@ -118,6 +138,15 @@ public class BiddingActivity extends Activity {
                 biddingTeam = nextTeam;
 
                 // TODO "pass the phone" pop-up
+                // Create a new AlertDialogFragment
+                mDialog = PlayerChangeDialogFragment.newInstance();
+                // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+                Bundle alertMessageBundle = new Bundle();
+                alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
+                        "Pass the phone to "+biddingTeam);
+                mDialog.setArguments(alertMessageBundle);
+                // Show AlertDialogFragment
+                mDialog.show(getFragmentManager(), "Alert");
 
                 updateViews();
             }
