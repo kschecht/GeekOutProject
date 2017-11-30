@@ -92,7 +92,6 @@ public class BiddingActivity extends Activity {
                 currentBid++;
                 biddingTeam = getNextTeam();
 
-                // TODO "pass phone" pop-up
                 // Create a new AlertDialogFragment
                 mDialog = PlayerChangeDialogFragment.newInstance();
                 // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
@@ -114,7 +113,6 @@ public class BiddingActivity extends Activity {
                 // This was the last team to pass.  Current leader wins the bid
                 if (biddingTeams.size() == 2)
                 {
-                    // TODO "pass the phone" pop-up
                     // Create a new AlertDialogFragment
                     mDialog = PlayerChangeDialogFragment.newInstance();
                     // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
@@ -137,7 +135,7 @@ public class BiddingActivity extends Activity {
                 biddingTeams.remove(biddingTeam); // This team passed, so they're no longer part of the bidding loop
                 biddingTeam = nextTeam;
 
-                // TODO "pass the phone" pop-up
+                // TODO pop-up mentions wrong team, change biddingTeam to correct team
                 // Create a new AlertDialogFragment
                 mDialog = PlayerChangeDialogFragment.newInstance();
                 // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android

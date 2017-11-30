@@ -100,17 +100,10 @@ public class QuestionActivity extends AppCompatActivity {
         if (settingsPrefs.getInt(MAX_ROUNDS, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, QuestionActivity.DEFAULT_POINTS);
         }
-        // if implementing time, uncomment this
-        /*
-        if (settingsPrefs.getInt(MAX_MINUTES, -1) == -1) {
-            settingsPrefsEditor.putInt(QuestionActivity.MAX_MINUTES, QuestionActivity.DEFAULT_MINUTES);
-        }
-        */
         if (settingsPrefs.getInt(MAX_POINTS, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, QuestionActivity.DEFAULT_ROUNDS);
         }
         settingsPrefsEditor.apply();
-
 
         /*
             Toolbar Settings
