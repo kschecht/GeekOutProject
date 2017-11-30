@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,31 +11,37 @@
         android:id="@+id/settingsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/settings_title"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_margin="@dimen/fab_margin"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/settings_title" />
 
     <TextView
         android:id="@+id/gameMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/game_mode"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_margin="@dimen/fab_margin"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/settingsTitle"
+        android:layout_centerHorizontal="true"
+        android:text="@string/game_mode" />
 
     <RadioGroup
         android:id="@+id/gameModeRadioButtons"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_below="@+id/gameMode"
+        android:layout_centerHorizontal="true">
 
         <RadioButton
             android:id="@+id/pointsLimit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:checked="true"
             android:text="@string/points" />
 
@@ -43,7 +49,7 @@
             android:id="@+id/roundsLimit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="20dp"
             android:text="@string/rounds" />
     </RadioGroup>
 
@@ -51,54 +57,103 @@
         android:id="@+id/pointLimit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/point_limit"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_margin="@dimen/fab_margin"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/gameModeRadioButtons"
+        android:layout_centerHorizontal="true"
+        android:text="@string/point_limit" />
 
-    <EditText
-        android:id="@+id/pointLimitEditText"
+    <TextView
+        android:id="@+id/currentPointValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/point_limit_hint"
-        android:layout_marginLeft="8dp"
-        android:inputType="number" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/point_limit_hint"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/decrementPointButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/gameMode"
+        android:layout_centerVertical="true"
+        app:srcCompat="@android:drawable/ic_input_delete" />
+
+    <ImageButton
+        android:id="@+id/incrementPointButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/gameMode"
+        android:layout_alignTop="@+id/decrementPointButton"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
         android:id="@+id/roundLimit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/round_limit"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_margin="@dimen/fab_margin"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/currentPointValue"
+        android:layout_centerHorizontal="true"
+        android:text="@string/round_limit" />
 
-    <EditText
-        android:id="@+id/roundLimitEditText"
+    <TextView
+        android:id="@+id/currentRoundValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/round_limit_hint"
-        android:layout_marginLeft="8dp"
-        android:inputType="number" />
+        android:layout_alignBottom="@+id/decrementRoundButton"
+        android:layout_alignStart="@+id/currentPointValue"
+        android:layout_marginBottom="11dp"
+        android:text="@string/round_limit_hint"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/decrementRoundButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:text="@string/cancel" />
+        android:layout_alignStart="@+id/decrementPointButton"
+        android:layout_below="@+id/roundLimit"
+        app:srcCompat="@android:drawable/ic_input_delete" />
 
-        <Button
-            android:id="@+id/updateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:text="@string/update" />
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/incrementRoundButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/gameMode"
+        android:layout_alignTop="@+id/decrementRoundButton"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Space
+        android:id="@+id/spacer"
+        android:layout_below="@id/incrementRoundButton"
+        android:layout_centerHorizontal="true"
+        android:layout_width="1dp"
+        android:layout_height="30dp"/>
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/incrementRoundButton"
+        android:layout_toLeftOf="@id/spacer"
+        android:layout_centerHorizontal="true"
+        android:text="@string/cancel" />
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/incrementRoundButton"
+        android:layout_toRightOf="@id/spacer"
+        android:layout_centerHorizontal="true"
+        android:text="@string/update" />
 
 
-</LinearLayout>
+</RelativeLayout>
