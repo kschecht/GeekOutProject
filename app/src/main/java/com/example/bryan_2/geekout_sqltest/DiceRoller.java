@@ -77,6 +77,7 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.GAMES);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.games));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
                         }
                     });
@@ -96,6 +97,7 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.SCI_FI);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.scifi));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
                         }
                     });
@@ -115,6 +117,7 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.FANTASY);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.fantasy));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
                         }
                     });
@@ -132,7 +135,9 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.MISCELLANEOUS);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.miscellaneous));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
+
                         }
                     });
                 }
@@ -149,6 +154,7 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.COMICS);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.comicbooks));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
                         }
                     });
@@ -165,7 +171,7 @@ public class DiceRoller extends AppCompatActivity {
 //                        {
 //                            Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
 //                            sendIntent.putExtra("pink", R.color.pink);
-//
+//                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
 //                            startActivity(sendIntent);
 //                        }
 //                    });

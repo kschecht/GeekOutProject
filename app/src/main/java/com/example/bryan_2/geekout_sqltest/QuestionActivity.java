@@ -208,6 +208,7 @@ public class QuestionActivity extends AppCompatActivity {
                 // Starts Bidding Activity
                 Intent intent = new Intent(QuestionActivity.this, BiddingActivity.class);
                 intent.putExtra(INTENT_BIDDING, String.valueOf(mTV.getText()));
+                intent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                 startActivity(intent);
             }
         });

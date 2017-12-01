@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -68,9 +69,15 @@ public class BiddingActivity extends Activity {
         // TODO get the list of teams, current question, question minimum bet... somewhere
         // Until we implement a way to pass that stuff around, use hardcoded debug values
         allTeams = new ArrayList<String>();
-        allTeams.add("Team 1");
-        allTeams.add("Team 2");
-        allTeams.add("Team 3");
+        Log.i("TEAM", "Got to here");
+        Log.i("TEAM", getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
+
+        for (int i = 0; i < Integer.valueOf(getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS)); i++) {
+            allTeams.add("Team " + (i + 1));
+        }
+//        allTeams.add("Team 1");
+//        allTeams.add("Team 2");
+//        allTeams.add("Team 3");
 
         // Everyone starts with a score of 0
         score = new HashMap<String, Integer>();
