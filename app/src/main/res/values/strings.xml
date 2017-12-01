@@ -6,8 +6,8 @@
     <string name="points">Points</string>
     <string name="rounds">Rounds</string>
     <string name="point_limit">Point Limit (if Points selected)</string>
-    <string name="point_limit_hint">6</string>
-    <string name="round_limit">Round Limit (if Points selected)</string>
+    <string name="point_limit_hint">5</string>
+    <string name="round_limit">Round Limit (if Rounds selected)</string>
     <string name="round_limit_hint">6</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
@@ -20,4 +20,6 @@
     <string name="pass">Pass</string>
     <string name="default_question">This is where the current question will be displayed</string>
     <string name="timeRemaining">Time remaining: </string>
+    <string name="num_teams_title">How many teams are playing?</string>
+    <string name="team_num">2</string>
 </resources>

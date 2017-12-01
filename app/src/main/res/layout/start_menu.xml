@@ -9,19 +9,12 @@
     android:gravity="center">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:textSize="20sp"
-        android:id="@+id/cat_name"
-        android:text="" />
-
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:id="@+id/dice_Image"
-        android:src="@drawable/dice_six_faces_five"
+        android:id="@+id/start_Image"
+
+        android:src="@drawable/geekout_logo"
         android:scaleType="centerInside"
         android:layout_gravity="center_horizontal"
 
@@ -30,23 +23,22 @@
         />
 
     <Button
-        android:id="@+id/roll_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/settings_button"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:textAlignment="center"
-        android:text="Roll Dice" />
+        android:layout_marginTop="120dp"
+        android:text="Settings"
+        android:textAlignment="center" />
 
     <Button
-        android:id="@+id/questionButton"
+        android:id="@+id/start_Button"
 
-        android:layout_width="wrap_content"
+        android:layout_width="229dp"
         android:layout_height="wrap_content"
-        android:text="Question"
-
         android:layout_marginTop="20dp"
-        android:textAlignment="center"
-        />
+
+        android:text="Start Game"
+        android:textAlignment="center" />
 
 
 </LinearLayout>

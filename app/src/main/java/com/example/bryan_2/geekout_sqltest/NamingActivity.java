@@ -48,7 +48,7 @@ public class NamingActivity extends Activity {
             return;
         }
 
-        timeLimit = 5; // TODO
+        timeLimit = 20; // TODO
         timerText = getString(R.string.timeRemaining);
 
         setContentView(R.layout.activity_naming);
@@ -108,5 +108,13 @@ public class NamingActivity extends Activity {
         };
 
         timer.start();
+    }
+
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+
     }
 }

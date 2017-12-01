@@ -1,9 +1,11 @@
 package com.example.bryan_2.geekout_sqltest;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,6 +37,7 @@ public class BiddingActivity extends Activity {
     TextView teamName;
     TextView currentBidView;
     TextView questionView;
+    private DialogFragment mDialog;
 
     // NOTE: This code is assuming that team names are unique
     HashMap<String, Integer> score;
@@ -62,12 +65,19 @@ public class BiddingActivity extends Activity {
         teamName = findViewById(R.id.teamNameView);
         currentBidView = findViewById(R.id.currentBidView);
 
+
         // TODO get the list of teams, current question, question minimum bet... somewhere
         // Until we implement a way to pass that stuff around, use hardcoded debug values
         allTeams = new ArrayList<String>();
-        allTeams.add("Team 1");
-        allTeams.add("Team 2");
-        allTeams.add("Team 3");
+        Log.i("TEAM", "Got to here");
+        Log.i("TEAM", getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
+
+        for (int i = 0; i < Integer.valueOf(getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS)); i++) {
+            allTeams.add("Team " + (i + 1));
+        }
+//        allTeams.add("Team 1");
+//        allTeams.add("Team 2");
+//        allTeams.add("Team 3");
 
         // Everyone starts with a score of 0
         score = new HashMap<String, Integer>();
@@ -89,7 +99,15 @@ public class BiddingActivity extends Activity {
                 currentBid++;
                 biddingTeam = getNextTeam();
 
-                // TODO "pass phone" pop-up
+                // Create a new AlertDialogFragment
+                mDialog = PlayerChangeDialogFragment.newInstance();
+                // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+                Bundle alertMessageBundle = new Bundle();
+                alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
+                        "Pass the phone to "+biddingTeam);
+                mDialog.setArguments(alertMessageBundle);
+                // Show AlertDialogFragment
+                mDialog.show(getFragmentManager(), "Alert");
 
                 updateViews();
             }
@@ -102,7 +120,15 @@ public class BiddingActivity extends Activity {
                 // This was the last team to pass.  Current leader wins the bid
                 if (biddingTeams.size() == 2)
                 {
-                    // TODO "pass the phone" pop-up
+                    // Create a new AlertDialogFragment
+                    mDialog = PlayerChangeDialogFragment.newInstance();
+                    // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+                    Bundle alertMessageBundle = new Bundle();
+                    alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
+                            "Pass the phone to "+leadingTeam);
+                    mDialog.setArguments(alertMessageBundle);
+                    // Show AlertDialogFragment
+                    mDialog.show(getFragmentManager(), "Alert");
 
                     Intent namingIntent = new Intent(BiddingActivity.this, NamingActivity.class);
                     namingIntent.putExtra(QUESTION_KEY, question);
@@ -116,7 +142,16 @@ public class BiddingActivity extends Activity {
                 biddingTeams.remove(biddingTeam); // This team passed, so they're no longer part of the bidding loop
                 biddingTeam = nextTeam;
 
-                // TODO "pass the phone" pop-up
+                // TODO pop-up mentions wrong team, change biddingTeam to correct team
+                // Create a new AlertDialogFragment
+                mDialog = PlayerChangeDialogFragment.newInstance();
+                // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+                Bundle alertMessageBundle = new Bundle();
+                alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
+                        "Pass the phone to "+biddingTeam);
+                mDialog.setArguments(alertMessageBundle);
+                // Show AlertDialogFragment
+                mDialog.show(getFragmentManager(), "Alert");
 
                 updateViews();
             }
@@ -133,12 +168,16 @@ public class BiddingActivity extends Activity {
         decrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 currentBid--;
 
                 // Can't bid less than the minimum for the round
                 if (currentBid < minimumBid)
                     currentBid = minimumBid;
                 // Can't bid less that the previous team
+                // TODO Why is previousBid != minimumBid there?
+                // TODO leads to a weird case: Team 1 bet minimum, team 2 can then decrease their bid
+                // to the minimum.
                 else if (currentBid <= previousBid && previousBid != minimumBid)
                     currentBid = previousBid+1;
 
@@ -183,7 +222,7 @@ public class BiddingActivity extends Activity {
         leadingTeam = biddingTeam; // To prevent the case where everyone passes without bidding, the first team has to bet at least the minimum
 
         // Don't bother holding on to this view.  We need to set it once and never interact again
-        question = "Some default question.";
+        question = getIntent().getStringExtra(QuestionActivity.INTENT_BIDDING);
         questionView.setText(question);
 
 
@@ -205,5 +244,13 @@ public class BiddingActivity extends Activity {
             return biddingTeams.get(0);
 
         return biddingTeams.get(index);
+    }
+
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+
     }
 }

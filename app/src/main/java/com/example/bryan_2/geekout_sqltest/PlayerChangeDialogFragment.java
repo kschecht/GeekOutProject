@@ -12,6 +12,8 @@ import android.os.Bundle;
 
 // displays whenever need to hand phone to a new team
 public class PlayerChangeDialogFragment extends DialogFragment {
+    public static final String ALERT_MESSAGE = "alertMessage";
+
     public static PlayerChangeDialogFragment newInstance() {
         return new PlayerChangeDialogFragment();
     }
@@ -19,7 +21,7 @@ public class PlayerChangeDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AlertDialog.Builder(getActivity())
-                .setMessage("Hand the phone to the team to your right!")
+                .setMessage(getArguments().getString(ALERT_MESSAGE))
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, int id) {
                         // TODO - shuts down current activity, leads to new activity
