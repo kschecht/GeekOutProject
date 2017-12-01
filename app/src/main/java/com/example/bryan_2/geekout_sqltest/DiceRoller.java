@@ -67,7 +67,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Games
                 if(numberGenerated==1) {
                     games.setText("Games");
-                    diceImage.setImageResource(R.drawable.newgames);
+                    diceImage.setImageResource(R.drawable.dice_games);
                     myView.setBackgroundResource(R.color.games);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +77,7 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.GAMES);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.games));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
                         }
                     });
@@ -85,7 +86,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Sci Fi
                 else if(numberGenerated==2) {
                     games.setText("Science-Fiction");
-                    diceImage.setImageResource(R.drawable.sfiction);
+                    diceImage.setImageResource(R.drawable.dice_scifi);
                     myView.setBackgroundResource(R.color.scifi);
 
 
@@ -96,6 +97,7 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.SCI_FI);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.scifi));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
                         }
                     });
@@ -105,7 +107,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Fantasy
                 else if(numberGenerated==3) {
                     games.setText("Fantasy");
-                    diceImage.setImageResource(R.drawable.fantasy);
+                    diceImage.setImageResource(R.drawable.dice_fantasy);
                     myView.setBackgroundResource(R.color.fantasy);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +117,7 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.FANTASY);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.fantasy));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
                         }
                     });
@@ -123,7 +126,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Miscellaneous
                 else if(numberGenerated==4) {
                     games.setText("Miscellaneous");
-                    diceImage.setImageResource(R.drawable.miscellaneous);
+                    diceImage.setImageResource(R.drawable.dice_misc);
                     myView.setBackgroundResource(R.color.miscellaneous);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -132,7 +135,9 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.MISCELLANEOUS);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.miscellaneous));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
+
                         }
                     });
                 }
@@ -140,7 +145,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Comic Books
                 else if(numberGenerated==5) {
                     games.setText("Comic Books");
-                    diceImage.setImageResource(R.drawable.comic);
+                    diceImage.setImageResource(R.drawable.dice_comics);
                     myView.setBackgroundResource(R.color.comicbooks);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -149,6 +154,7 @@ public class DiceRoller extends AppCompatActivity {
                             Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
                             sendIntent.putExtra(QuestionActivity.INTENT_TAG, QuestionActivity.COMICS);
                             sendIntent.putExtra(QuestionActivity.INTENT_COLOR, String.valueOf(R.color.comicbooks));
+                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
                             startActivity(sendIntent);
                         }
                     });
@@ -165,7 +171,7 @@ public class DiceRoller extends AppCompatActivity {
 //                        {
 //                            Intent sendIntent = new Intent(DiceRoller.this, QuestionActivity.class);
 //                            sendIntent.putExtra("pink", R.color.pink);
-//
+//                            sendIntent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
 //                            startActivity(sendIntent);
 //                        }
 //                    });

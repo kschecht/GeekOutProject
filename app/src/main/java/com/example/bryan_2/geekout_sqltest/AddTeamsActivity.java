@@ -3,6 +3,7 @@ package com.example.bryan_2.geekout_sqltest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -44,7 +45,8 @@ public class AddTeamsActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (Integer.parseInt(numTeams.getText().toString()) > 2) {
-                    numTeams.setText(Integer.parseInt(numTeams.getText().toString()) - 1);
+                    String newNum = String.valueOf(Integer.parseInt(numTeams.getText().toString()) - 1);
+                    numTeams.setText(newNum);
                 }
             }
         });
@@ -53,7 +55,8 @@ public class AddTeamsActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (Integer.parseInt(numTeams.getText().toString()) < 5) {
-                    numTeams.setText(Integer.parseInt(numTeams.getText().toString()) + 1);
+                    String newNum = String.valueOf(Integer.parseInt(numTeams.getText().toString()) + 1);
+                    numTeams.setText(newNum);
                 }
             }
         });
@@ -64,8 +67,8 @@ public class AddTeamsActivity extends Activity {
             public void onClick(View v) {
 
                 Intent sendIntent = new Intent(AddTeamsActivity.this, DiceRoller.class);
-
-                sendIntent.putExtra(NUM_TEAMS, Integer.parseInt(numTeams.getText().toString()));
+                Log.i("TEAM", numTeams.getText().toString());
+                sendIntent.putExtra(NUM_TEAMS, numTeams.getText().toString());
 
                 startActivity(sendIntent);
 
