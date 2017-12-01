@@ -2,6 +2,7 @@ package com.example.bryan_2.geekout_sqltest;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,15 +31,16 @@ public class DiceRoller extends AppCompatActivity {
         //dice roller activity
         setContentView(R.layout.dice_roller);
 
-
-        // TODO get correct team name to pass to
+        final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+        
         // TODO only display if DiceRoller is not being called as a result of "ReRoll"
         // Create a new AlertDialogFragment
         mDialog = PlayerChangeDialogFragment.newInstance();
         // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
         Bundle alertMessageBundle = new Bundle();
         alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
-                "Pass the phone to Team 1");
+                "Pass the phone to Team "+scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, 0));
         mDialog.setArguments(alertMessageBundle);
         // Show AlertDialogFragment
         mDialog.show(getFragmentManager(), "Alert");
