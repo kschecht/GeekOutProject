@@ -89,7 +89,7 @@ public class QuestionActivity extends AppCompatActivity {
         /*
            SharedPreferences
          */
-        SharedPreferences settingsPrefs = getSharedPreferences
+        final SharedPreferences settingsPrefs = getSharedPreferences
                 (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
 
@@ -105,6 +105,9 @@ public class QuestionActivity extends AppCompatActivity {
         }
         settingsPrefsEditor.apply();
 
+        final SharedPreferences scoreRoundPrefs = getSharedPreferences
+                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+
         /*
             Toolbar Settings
          */
@@ -112,12 +115,76 @@ public class QuestionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // TODO remove so we don't have duplicate settings buttons
-        ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        final ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
                 startActivity(launchSettingsActInt);
+
+                // check if now have too many rounds or rounds and game should end
+                if (settingsPrefs.getInt(GAME_MODE, -1) == POINTS_MODE) {
+                    int maxScore = 0;
+                    int winningTeam = 0;
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1)) {
+                        winningTeam = 1;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1);
+                    }
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1) &&
+                            scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) > maxScore) {
+                        winningTeam = 2;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1);
+                    }
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1) &&
+                            scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) > maxScore) {
+                        winningTeam = 3;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1);
+                    }
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1) &&
+                            scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) > maxScore) {
+                        winningTeam = 4;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1);
+                    }
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1) &&
+                            scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) > maxScore) {
+                        winningTeam = 5;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1);
+                    }
+                    if (winningTeam != 0) {
+                        // TODO intent to show winner and restart game
+                    }
+                } else {
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1) > settingsPrefs.getInt(MAX_ROUNDS, -1)) {
+                        int maxScore = -1;
+                        int winningTeam = 0;
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1) > maxScore) {
+                            winningTeam = 1;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1);
+                        }
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) > maxScore) {
+                            winningTeam = 2;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1);
+                        }
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) > maxScore) {
+                            winningTeam = 3;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1);
+                        }
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) > maxScore) {
+                            winningTeam = 4;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1);
+                        }
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) > maxScore) {
+                            winningTeam = 5;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1);
+                        }
+                        // TODO intent to show winner and restart game
+                    }
+                }
             }
         });
 

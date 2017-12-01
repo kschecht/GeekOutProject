@@ -33,7 +33,7 @@ public class DiceRoller extends AppCompatActivity {
 
         final SharedPreferences scoreRoundsPrefs = getSharedPreferences
                 (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
-        
+
         // TODO only display if DiceRoller is not being called as a result of "ReRoll"
         // Create a new AlertDialogFragment
         mDialog = PlayerChangeDialogFragment.newInstance();
