@@ -140,6 +140,12 @@ public class SettingsActivity extends Activity {
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, originalPointLimit);
                 mPointLimitText.setText(String.valueOf(originalPointLimit));
                 mRoundLimitText.setText(String.valueOf(originalRoundLimit));
+                // check original game mode
+                if (originalGameMode == QuestionActivity.POINTS_MODE) {
+                    mGameModeRadioGroup.check(R.id.pointsLimit);
+                } else {
+                    mGameModeRadioGroup.check(R.id.roundsLimit);
+                }
                 settingsPrefsEditor.apply();
 
                 finish();
