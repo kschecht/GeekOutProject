@@ -191,15 +191,6 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.i(TAG, "Done with picking");
 
-                /*// TODO Figure out a way to wait for user response to dialog before proceeding
-                // Create a new AlertDialogFragment
-                mDialog = PlayerChangeDialogFragment.newInstance();
-                // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
-                Bundle alertMessageBundle = new Bundle();
-                alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE, "Pass the phone to "+biddingTeam);
-                // Show AlertDialogFragment
-                mDialog.show(getFragmentManager(), "Alert");*/
-
                 // Adds picked question to the used question list
                 Log.i("USED", String.valueOf(mTV.getText()));
                 usedQuestions.add(String.valueOf(mTV.getText()));
