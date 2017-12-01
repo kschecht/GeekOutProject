@@ -14,7 +14,7 @@
         android:layout_height="150dp"
         android:id="@+id/start_Image"
 
-        android:src="@drawable/dice_six_faces_five"
+        android:src="@drawable/geekout_logo"
         android:scaleType="centerInside"
         android:layout_gravity="center_horizontal"
 

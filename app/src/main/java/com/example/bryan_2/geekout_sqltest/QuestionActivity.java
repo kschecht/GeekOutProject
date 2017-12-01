@@ -220,8 +220,10 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Re-Roll for Category");
-                Intent intent = new Intent(QuestionActivity.this, DiceRoller.class);
-                startActivity(intent);
+//                Intent intent = new Intent(QuestionActivity.this, DiceRoller.class);
+//
+//                startActivity(intent);
+                finish();
             }
         });
     }

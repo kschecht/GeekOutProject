@@ -67,7 +67,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Games
                 if(numberGenerated==1) {
                     games.setText("Games");
-                    diceImage.setImageResource(R.drawable.newgames);
+                    diceImage.setImageResource(R.drawable.dice_games);
                     myView.setBackgroundResource(R.color.games);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +85,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Sci Fi
                 else if(numberGenerated==2) {
                     games.setText("Science-Fiction");
-                    diceImage.setImageResource(R.drawable.sfiction);
+                    diceImage.setImageResource(R.drawable.dice_scifi);
                     myView.setBackgroundResource(R.color.scifi);
 
 
@@ -105,7 +105,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Fantasy
                 else if(numberGenerated==3) {
                     games.setText("Fantasy");
-                    diceImage.setImageResource(R.drawable.fantasy);
+                    diceImage.setImageResource(R.drawable.dice_fantasy);
                     myView.setBackgroundResource(R.color.fantasy);
 
                     questionButton.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +123,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Miscellaneous
                 else if(numberGenerated==4) {
                     games.setText("Miscellaneous");
-                    diceImage.setImageResource(R.drawable.miscellaneous);
+                    diceImage.setImageResource(R.drawable.dice_misc);
                     myView.setBackgroundResource(R.color.miscellaneous);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -140,7 +140,7 @@ public class DiceRoller extends AppCompatActivity {
                 // Comic Books
                 else if(numberGenerated==5) {
                     games.setText("Comic Books");
-                    diceImage.setImageResource(R.drawable.comic);
+                    diceImage.setImageResource(R.drawable.dice_comics);
                     myView.setBackgroundResource(R.color.comicbooks);
                     questionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
