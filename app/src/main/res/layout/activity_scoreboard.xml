@@ -27,14 +27,14 @@
             android:layout_column="0"
             android:padding="3dp"
             android:text="@string/team1"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/team1Score"
             android:gravity="left"
             android:padding="3dp"
             android:text=""
-            android:textSize="16sp"
+            android:textSize="25sp"
             tools:ignore="RtlHardcoded" />
     </TableRow>
 
@@ -49,14 +49,14 @@
             android:layout_column="0"
             android:padding="3dp"
             android:text="@string/team2"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/team2Score"
             android:gravity="left"
             android:padding="3dip"
             android:text=""
-            android:textSize="16sp"
+            android:textSize="25sp"
             tools:ignore="RtlHardcoded" />
     </TableRow>
 
@@ -71,14 +71,14 @@
             android:layout_column="0"
             android:padding="3dp"
             android:text="@string/team3"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/team3Score"
             android:gravity="left"
             android:padding="3dip"
             android:text="@string/notPlaying"
-            android:textSize="16sp"
+            android:textSize="25sp"
             tools:ignore="RtlHardcoded" />
     </TableRow>
 
@@ -93,14 +93,14 @@
             android:layout_column="0"
             android:padding="3dp"
             android:text="@string/team4"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/team4Score"
             android:gravity="left"
             android:padding="3dip"
             android:text="@string/notPlaying"
-            android:textSize="16sp"
+            android:textSize="25sp"
             tools:ignore="RtlHardcoded" />
     </TableRow>
 
@@ -115,14 +115,14 @@
             android:layout_column="0"
             android:padding="3dp"
             android:text="@string/team5"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/team5Score"
             android:gravity="left"
             android:padding="3dip"
             android:text="@string/notPlaying"
-            android:textSize="16sp"
+            android:textSize="25sp"
             tools:ignore="RtlHardcoded" />
     </TableRow>
 
