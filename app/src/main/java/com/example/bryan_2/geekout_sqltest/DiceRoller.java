@@ -55,6 +55,7 @@ public class DiceRoller extends AppCompatActivity {
 
         randomNumber = new Random();
 
+        // TODO handle user clicking question without rolling first
 
         rollDice.setOnClickListener(new View.OnClickListener(){
 
