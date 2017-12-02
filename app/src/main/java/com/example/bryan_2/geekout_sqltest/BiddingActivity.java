@@ -66,8 +66,6 @@ public class BiddingActivity extends Activity {
         currentBidView = findViewById(R.id.currentBidView);
 
 
-        // TODO get the list of teams, current question, question minimum bet... somewhere
-        // Until we implement a way to pass that stuff around, use hardcoded debug values
         allTeams = new ArrayList<String>();
         Log.i("TEAM", "Got to here");
         Log.i("TEAM", getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
@@ -142,7 +140,6 @@ public class BiddingActivity extends Activity {
                 biddingTeams.remove(biddingTeam); // This team passed, so they're no longer part of the bidding loop
                 biddingTeam = nextTeam;
 
-                // TODO pop-up mentions wrong team, change biddingTeam to correct team
                 // Create a new AlertDialogFragment
                 mDialog = PlayerChangeDialogFragment.newInstance();
                 // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
@@ -171,15 +168,13 @@ public class BiddingActivity extends Activity {
 
                 currentBid--;
 
-                // Can't bid less than the minimum for the round
-                if (currentBid < minimumBid)
-                    currentBid = minimumBid;
                 // Can't bid less that the previous team
-                // TODO Why is previousBid != minimumBid there?
-                // TODO leads to a weird case: Team 1 bet minimum, team 2 can then decrease their bid
-                // to the minimum.
-                else if (currentBid <= previousBid && previousBid != minimumBid)
+                if (currentBid <= previousBid)
                     currentBid = previousBid+1;
+
+                // Can't bid less than the minimum for the round
+                else if (currentBid < minimumBid)
+                    currentBid = minimumBid;
 
                 updateViews();
             }
@@ -205,14 +200,14 @@ public class BiddingActivity extends Activity {
                 score.put(leadingTeam, score.get(leadingTeam) - 2);
             }
 
-            startNewRound();
+            finish();
         }
     }
 
     void startNewRound()
     {
         minimumBid = 1;
-        previousBid = minimumBid;
+        previousBid = minimumBid-1;
         currentBid = minimumBid;
 
         biddingTeams.clear();

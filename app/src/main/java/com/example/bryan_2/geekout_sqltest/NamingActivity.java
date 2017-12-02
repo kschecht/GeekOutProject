@@ -44,7 +44,6 @@ public class NamingActivity extends Activity {
 
         if (question == null || namingTeam == null || goal == -1)
         {
-            //TODO what to do on error like this?
             return;
         }
 
@@ -64,7 +63,9 @@ public class NamingActivity extends Activity {
         timerView = findViewById(R.id.namingTimerView);
 
         addButton = findViewById(R.id.incrementScoreButton);
+        addButton.setImageResource(android.R.drawable.ic_input_add); // TODO figure out why this isn't working from xml
         subtractButton = findViewById(R.id.decrementScoreButton);
+        subtractButton.setImageResource(android.R.drawable.ic_input_delete); // TODO ditto
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
