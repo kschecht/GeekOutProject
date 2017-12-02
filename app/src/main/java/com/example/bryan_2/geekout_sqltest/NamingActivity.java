@@ -2,6 +2,7 @@ package com.example.bryan_2.geekout_sqltest;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -94,10 +95,20 @@ public class NamingActivity extends Activity {
         });
 
         timer = new CountDownTimer(timeLimit * 1000, 1000) {
+
             @Override
             public void onTick(long l) {
-                timerView.setText(timerText + l/1000 + " seconds");
+
+                long timer = l/1000;
+                timerView.setText(timerText + timer + " seconds");
+
+                if(timer<5  && timer > 0){
+                    MediaPlayer mPlayer= MediaPlayer.create(NamingActivity.this, R.raw.countdown);
+
+                    mPlayer.start();
+                }
             }
+
 
             @Override
             public void onFinish() {
