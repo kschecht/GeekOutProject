@@ -2,6 +2,7 @@ package com.example.bryan_2.geekout_sqltest;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -43,6 +44,10 @@ public class NamingActivity extends Activity {
         goal = callingIntent.getIntExtra(BiddingActivity.TARGET_KEY, -1);
         currentScore = 0;
 
+        final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+        final SharedPreferences.Editor scoreEditor = scoreRoundsPrefs.edit();
+
         if (question == null || namingTeam == null || goal == -1)
         {
             return;
@@ -75,10 +80,11 @@ public class NamingActivity extends Activity {
 
                 if (currentScore >= goal)
                 {
-                    // TODO go to victory
                     timer.cancel();
-                    setResult(1);
-                    finish();
+                    scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) + 1);
+                    scoreEditor.apply();
+                    Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
+                    startActivity(scoreboard);
                 }
                 scoreView.setText(Integer.toString(currentScore));
             }
@@ -113,9 +119,11 @@ public class NamingActivity extends Activity {
 
             @Override
             public void onFinish() {
-                //TODO go to failure
-                setResult(-1);
-                finish();
+
+                scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) -2);
+                scoreEditor.apply();
+                Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
+                startActivity(scoreboard);
             }
         };
 
@@ -128,5 +136,31 @@ public class NamingActivity extends Activity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    // Get the string key for the current team's score pref based on team name
+    String currTeamScoreKey()
+    {
+        if (namingTeam == "Team 1")
+        {
+            return AddTeamsActivity.TEAM1_SCORE;
+        }
+        if (namingTeam == "Team 2")
+        {
+            return AddTeamsActivity.TEAM2_SCORE;
+        }
+        if (namingTeam == "Team 3")
+        {
+            return AddTeamsActivity.TEAM3_SCORE;
+        }
+        if (namingTeam == "Team 4")
+        {
+            return AddTeamsActivity.TEAM4_SCORE;
+        }
+        if (namingTeam == "Team 5")
+        {
+            return AddTeamsActivity.TEAM5_SCORE;
+        }
+        return "";
     }
 }

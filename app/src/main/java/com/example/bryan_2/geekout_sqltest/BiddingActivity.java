@@ -129,7 +129,7 @@ public class BiddingActivity extends Activity {
                     namingIntent.putExtra(QUESTION_KEY, question);
                     namingIntent.putExtra(NAMING_TEAM_KEY, getNextTeam()); // "Next team" should be the only team left after the current team is passed
                     namingIntent.putExtra(TARGET_KEY, previousBid);
-                    startActivityForResult(namingIntent, BEGIN_NAMING_REQUEST);
+                    startActivity(namingIntent);
                     return;
                 }
                 currentBid = previousBid + 1;
@@ -177,28 +177,6 @@ public class BiddingActivity extends Activity {
             }
         });
 
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        // If we don't recognize the request code, do nothing
-        if (requestCode == BEGIN_NAMING_REQUEST)
-        {
-            if (resultCode > 0)
-            {
-                // Leading team shouldn't change between starting NamingActivity and getting its resutls
-                score.put(leadingTeam, score.get(leadingTeam) + 1);
-            }
-
-            else if (resultCode < 0)
-            {
-                // The score is allowed to go negative.  This is not a bug.
-                // Leading team shouldn't change between starting NamingActivity and getting its resutls
-                score.put(leadingTeam, score.get(leadingTeam) - 2);
-            }
-
-            finish();
-        }
     }
 
     void startNewRound()
