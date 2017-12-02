@@ -15,7 +15,7 @@
         android:layout_marginBottom="50dp"
         android:textSize="20sp"
         android:id="@+id/cat_name"
-        android:text="" />
+        android:text="@string/roll_dice" />
 
     <ImageView
         android:layout_width="150dp"

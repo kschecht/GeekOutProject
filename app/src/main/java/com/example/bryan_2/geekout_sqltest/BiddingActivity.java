@@ -75,9 +75,6 @@ public class BiddingActivity extends Activity {
         for (int i = 0; i < Integer.valueOf(getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS)); i++) {
             allTeams.add("Team " + (i + 1));
         }
-//        allTeams.add("Team 1");
-//        allTeams.add("Team 2");
-//        allTeams.add("Team 3");
 
         // Everyone starts with a score of 0
         score = new HashMap<String, Integer>();
@@ -211,7 +208,7 @@ public class BiddingActivity extends Activity {
 
     void startNewRound()
     {
-        minimumBid = 1;
+        minimumBid = Integer.parseInt(getIntent().getStringExtra(QuestionActivity.INTENT_MIN_BID));
         previousBid = minimumBid;
         currentBid = minimumBid;
 
