@@ -78,7 +78,7 @@ public class NamingActivity extends Activity {
             public void onClick(View view) {
                 currentScore++;
 
-                if (currentScore >= goal)
+                if (currentScore == goal)
                 {
                     timer.cancel();
                     scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) + 1);
