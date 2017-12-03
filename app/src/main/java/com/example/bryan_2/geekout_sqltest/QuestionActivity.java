@@ -406,44 +406,6 @@ public class QuestionActivity extends AppCompatActivity {
 
             //Log.d("madeItHere", "Yes we made it!");
             // TODO this is supposed to end the game as soon as you pick settings that would end it, doesn't do that
-
-            final SharedPreferences settingsPrefs = getSharedPreferences
-                    (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
-            final SharedPreferences scoreRoundPrefs = getSharedPreferences
-                    (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
-
-            boolean gameShouldEnd = false;
-
-            // check if now have too many rounds or rounds and game should end
-            if (settingsPrefs.getInt(GAME_MODE, -1) == POINTS_MODE) {
-                Log.d("Team1Score", ""+scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1));
-                Log.d("MaxPoints", ""+settingsPrefs.getInt(MAX_POINTS, -1));
-                if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1) >=
-                        settingsPrefs.getInt(MAX_POINTS, -1)) {
-                    Log.d("shouldGetHere", "got here!!!!!");
-                    gameShouldEnd = true;
-                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) >=
-                        settingsPrefs.getInt(MAX_POINTS, -1)) {
-                    gameShouldEnd = true;
-                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) >=
-                        settingsPrefs.getInt(MAX_POINTS, -1)) {
-                    gameShouldEnd = true;
-                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) >=
-                        settingsPrefs.getInt(MAX_POINTS, -1)) {
-                    gameShouldEnd = true;
-                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) >=
-                        settingsPrefs.getInt(MAX_POINTS, -1)) {
-                    gameShouldEnd = true;
-                }
-            } else {
-                if (scoreRoundPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1) > settingsPrefs.getInt(MAX_ROUNDS, -1)) {
-                    gameShouldEnd = true;
-                }
-            }
-            if (gameShouldEnd) {
-                Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
-                startActivity(launchScoreboardActInt);
-            }
         }
 
         if (id == R.id.action_scoreboard) {
