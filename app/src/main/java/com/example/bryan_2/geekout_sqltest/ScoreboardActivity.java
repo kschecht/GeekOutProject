@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by kschechter on 12/1/2017.
@@ -90,10 +91,22 @@ public class ScoreboardActivity extends Activity {
                     return;
                 }
 
-                // TODO when accessing the scoreboard from question, should return to that question's page, currently goes back to dice page
-                Intent nextQuestion = new Intent(ScoreboardActivity.this, DiceRoller.class);
-                nextQuestion.putExtra(AddTeamsActivity.NUM_TEAMS, String.valueOf(numTeams()));
-                startActivity(nextQuestion);
+                if (getIntent().getBooleanExtra(NamingActivity.FINISHED_ROUND, false)) {
+                    final SharedPreferences.Editor scoreRoundsEditor = scoreRoundsPrefs.edit();
+                    // increment team turn
+                    if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, -1) == numTeams()) {
+                        scoreRoundsEditor.putInt(AddTeamsActivity.TEAM_TURN, 1);
+                    } else {
+                        scoreRoundsEditor.putInt(AddTeamsActivity.TEAM_TURN,
+                                scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, -1) + 1);
+                    }
+                    scoreRoundsEditor.apply();
+                    Intent nextQuestion = new Intent(ScoreboardActivity.this, DiceRoller.class);
+                    nextQuestion.putExtra(AddTeamsActivity.NUM_TEAMS, String.valueOf(numTeams()));
+                    startActivity(nextQuestion);
+                } else {
+                    finish();
+                }
             }
         });
     }
@@ -204,6 +217,7 @@ public class ScoreboardActivity extends Activity {
 
         if (foundWinner && winnerTextView != null)
         {
+            Toast.makeText(ScoreboardActivity.this, "Game Over", Toast.LENGTH_SHORT);
             winnerTextView.setText("Winner ! (" + winnerScore + ")");
         }
     }

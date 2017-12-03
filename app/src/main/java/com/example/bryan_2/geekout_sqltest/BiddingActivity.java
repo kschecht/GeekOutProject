@@ -3,6 +3,7 @@ package com.example.bryan_2.geekout_sqltest;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -49,7 +50,7 @@ public class BiddingActivity extends Activity {
     int previousBid;
     int minimumBid;
     int currentBid;
-    int firstBidder = 0; //< Increments every round
+    int firstBidder;// = 0; //< Increments every round
     boolean firstRoundOfBidding;
 
     @Override
@@ -65,6 +66,9 @@ public class BiddingActivity extends Activity {
         decrementButton.setImageResource(android.R.drawable.ic_input_delete); // TODO ditto
         teamName = findViewById(R.id.teamNameView);
         currentBidView = findViewById(R.id.currentBidView);
+        final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+        firstBidder = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, 0) - 1;
 
 
         this.getWindow().getDecorView().setBackgroundResource(R.color.geekout);
@@ -131,6 +135,7 @@ public class BiddingActivity extends Activity {
                     // Show AlertDialogFragment
                     mDialog.show(getFragmentManager(), "Alert");
                 } else {
+
                     // This was the last team to pass.  Current leader wins the bid
                     if (biddingTeams.size() == 2) {
                         Intent namingIntent = new Intent(BiddingActivity.this, NamingActivity.class);
@@ -146,6 +151,16 @@ public class BiddingActivity extends Activity {
                     biddingTeam = nextTeam;
 
                     updateViews();
+
+                    // Create a new AlertDialogFragment
+                    mDialog = PlayerChangeDialogFragment.newInstance();
+                    // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+                    Bundle alertMessageBundle = new Bundle();
+                    alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
+                            "Pass the phone to "+biddingTeam);
+                    mDialog.setArguments(alertMessageBundle);
+                    // Show AlertDialogFragment
+                    mDialog.show(getFragmentManager(), "Alert");
                 }
             }
         });
@@ -187,7 +202,7 @@ public class BiddingActivity extends Activity {
         biddingTeams.clear();
         biddingTeams.addAll(allTeams);
 
-        biddingTeam = biddingTeams.get(firstBidder++);
+        biddingTeam = biddingTeams.get(firstBidder);
         leadingTeam = biddingTeam; // To prevent the case where everyone passes without bidding, the first team has to bet at least the minimum
 
         // Don't bother holding on to this view.  We need to set it once and never interact again

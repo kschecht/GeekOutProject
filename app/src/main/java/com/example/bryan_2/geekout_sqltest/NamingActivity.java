@@ -37,6 +37,8 @@ public class NamingActivity extends Activity {
 
     private DialogFragment mDialog;
 
+    public static final String FINISHED_ROUND = "finshedRound";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,7 @@ public class NamingActivity extends Activity {
                     scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
                     scoreEditor.commit();
                     Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
+                    scoreboard.putExtra(FINISHED_ROUND, true);
                     startActivity(scoreboard);
                 }
                 scoreView.setText(Integer.toString(currentScore));
