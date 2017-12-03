@@ -31,6 +31,7 @@ public class ScoreboardActivity extends Activity {
     private SharedPreferences scoreRoundsPrefs;
 
     private boolean foundWinner;
+    private boolean donePressed;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class ScoreboardActivity extends Activity {
                 (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
 
         foundWinner = false;
+        donePressed = false;
 
         // Get the simple score values in before we check for a winner.  Strings might change after that
         team1points = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, Integer.MIN_VALUE);
@@ -94,18 +96,21 @@ public class ScoreboardActivity extends Activity {
                 }
 
                 if (getIntent().getBooleanExtra(NamingActivity.FINISHED_ROUND, false)) {
-                    final SharedPreferences.Editor scoreRoundsEditor = scoreRoundsPrefs.edit();
-                    // increment team turn
-                    if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, -1) == numTeams()) {
-                        scoreRoundsEditor.putInt(AddTeamsActivity.TEAM_TURN, 1);
-                    } else {
-                        scoreRoundsEditor.putInt(AddTeamsActivity.TEAM_TURN,
-                                scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, -1) + 1);
+                    if (!donePressed) {
+                        donePressed = true;
+                        final SharedPreferences.Editor scoreRoundsEditor = scoreRoundsPrefs.edit();
+                        // increment team turn
+                        if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, -1) == numTeams()) {
+                            scoreRoundsEditor.putInt(AddTeamsActivity.TEAM_TURN, 1);
+                        } else {
+                            scoreRoundsEditor.putInt(AddTeamsActivity.TEAM_TURN,
+                                    scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, -1) + 1);
+                        }
+                        scoreRoundsEditor.apply();
+                        Intent nextQuestion = new Intent(ScoreboardActivity.this, DiceRoller.class);
+                        nextQuestion.putExtra(AddTeamsActivity.NUM_TEAMS, String.valueOf(numTeams()));
+                        startActivity(nextQuestion);
                     }
-                    scoreRoundsEditor.apply();
-                    Intent nextQuestion = new Intent(ScoreboardActivity.this, DiceRoller.class);
-                    nextQuestion.putExtra(AddTeamsActivity.NUM_TEAMS, String.valueOf(numTeams()));
-                    startActivity(nextQuestion);
                 } else {
                     finish();
                 }
