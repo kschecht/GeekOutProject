@@ -1,6 +1,7 @@
 package com.example.bryan_2.geekout_sqltest;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -18,8 +19,6 @@ import org.w3c.dom.Text;
  */
 
 public class NamingActivity extends Activity {
-    public static final String ROUNDS_COMPLETED_SETTING = "RoundCompletedKey";
-
     String timerText;
 
     TextView questionView;
@@ -35,6 +34,8 @@ public class NamingActivity extends Activity {
     int goal;
     int currentScore;
     int timeLimit; // in seconds
+
+    private DialogFragment mDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class NamingActivity extends Activity {
             return;
         }
 
-        timeLimit = 20; // TODO
+        timeLimit = 20 * goal; // TODO - This is the time limit when I play usually - Colin
         timerText = getString(R.string.timeRemaining);
 
         setContentView(R.layout.activity_naming);
@@ -84,7 +85,7 @@ public class NamingActivity extends Activity {
                 {
                     timer.cancel();
                     scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) + 1);
-                    scoreEditor.putInt(ROUNDS_COMPLETED_SETTING, scoreRoundsPrefs.getInt(ROUNDS_COMPLETED_SETTING, 0) + 1);
+                    scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
                     scoreEditor.commit();
                     Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
                     startActivity(scoreboard);
@@ -124,7 +125,7 @@ public class NamingActivity extends Activity {
             public void onFinish() {
 
                 scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) -2);
-                scoreEditor.putInt(ROUNDS_COMPLETED_SETTING, scoreRoundsPrefs.getInt(ROUNDS_COMPLETED_SETTING, 0) + 1);
+                scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
                 scoreEditor.commit();
                 Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
                 startActivity(scoreboard);
@@ -132,6 +133,16 @@ public class NamingActivity extends Activity {
         };
 
         timer.start();
+
+        // Create a new AlertDialogFragment
+        mDialog = PlayerChangeDialogFragment.newInstance();
+        // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
+        Bundle alertMessageBundle = new Bundle();
+        alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
+                "Pass the phone to " + namingTeam);
+        mDialog.setArguments(alertMessageBundle);
+        // Show AlertDialogFragment
+        mDialog.show(getFragmentManager(), "Alert");
     }
 
     /*

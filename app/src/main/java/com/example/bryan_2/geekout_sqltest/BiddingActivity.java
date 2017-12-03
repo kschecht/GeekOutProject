@@ -130,16 +130,6 @@ public class BiddingActivity extends Activity {
                 } else {
                     // This was the last team to pass.  Current leader wins the bid
                     if (biddingTeams.size() == 2) {
-                        // Create a new AlertDialogFragment
-                        mDialog = PlayerChangeDialogFragment.newInstance();
-                        // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
-                        Bundle alertMessageBundle = new Bundle();
-                        alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
-                                "Pass the phone to " + leadingTeam);
-                        mDialog.setArguments(alertMessageBundle);
-                        // Show AlertDialogFragment
-                        mDialog.show(getFragmentManager(), "Alert");
-
                         Intent namingIntent = new Intent(BiddingActivity.this, NamingActivity.class);
                         namingIntent.putExtra(QUESTION_KEY, question);
                         namingIntent.putExtra(NAMING_TEAM_KEY, getNextTeam()); // "Next team" should be the only team left after the current team is passed

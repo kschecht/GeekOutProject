@@ -131,7 +131,9 @@ public class ScoreboardActivity extends Activity {
 
         if (settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1) == QuestionActivity.ROUND_MODE)
         {
-            if (scoreRoundsPrefs.getInt(NamingActivity.ROUNDS_COMPLETED_SETTING, 0) >= settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, Integer.MAX_VALUE))
+            /* TODO what to do in the case of a tie?  A tie is impossible in the points case since teams can't
+             * gain points at the same time and therefore one team gets to the goal first, but if there's a round limit? */
+            if (scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) >= settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, Integer.MAX_VALUE))
             {
                 winnerScore = team1points;
                 winnerTextView = team1Score;
