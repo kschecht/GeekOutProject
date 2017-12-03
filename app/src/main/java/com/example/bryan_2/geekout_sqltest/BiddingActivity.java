@@ -127,7 +127,7 @@ public class BiddingActivity extends Activity {
 
                     Intent namingIntent = new Intent(BiddingActivity.this, NamingActivity.class);
                     namingIntent.putExtra(QUESTION_KEY, question);
-                    namingIntent.putExtra(NAMING_TEAM_KEY, getNextTeam()); // "Next team" should be the only team left after the current team is passed
+                    namingIntent.putExtra(NAMING_TEAM_KEY, leadingTeam);
                     namingIntent.putExtra(TARGET_KEY, previousBid);
                     startActivity(namingIntent);
                     return;

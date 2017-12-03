@@ -18,6 +18,8 @@ import org.w3c.dom.Text;
  */
 
 public class NamingActivity extends Activity {
+    public static final String ROUNDS_COMPLETED_SETTING = "RoundCompletedKey";
+
     String timerText;
 
     TextView questionView;
@@ -82,6 +84,7 @@ public class NamingActivity extends Activity {
                 {
                     timer.cancel();
                     scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) + 1);
+                    scoreEditor.putInt(ROUNDS_COMPLETED_SETTING, scoreRoundsPrefs.getInt(ROUNDS_COMPLETED_SETTING, 0) + 1);
                     scoreEditor.commit();
                     Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
                     startActivity(scoreboard);
@@ -121,6 +124,7 @@ public class NamingActivity extends Activity {
             public void onFinish() {
 
                 scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) -2);
+                scoreEditor.putInt(ROUNDS_COMPLETED_SETTING, scoreRoundsPrefs.getInt(ROUNDS_COMPLETED_SETTING, 0) + 1);
                 scoreEditor.commit();
                 Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
                 startActivity(scoreboard);

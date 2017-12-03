@@ -126,52 +126,87 @@ public class ScoreboardActivity extends Activity {
     {
         final SharedPreferences settingsPrefs = getSharedPreferences(QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
 
-
-        if (settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1) == QuestionActivity.ROUND_MODE)
-        {
-            // TODO need to start tracking round number with the scoreRoundsPref
-            return;
-        }
-
-        int target = settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1);
         TextView winnerTextView = null;
         int winnerScore = 0;
 
-        // NOTE: this code assumes point target won't change mid-game
-        if (team1points >= target)
+        if (settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1) == QuestionActivity.ROUND_MODE)
         {
-            winnerTextView = team1Score;
-            winnerScore = team1points;
-            foundWinner = true;
+            if (scoreRoundsPrefs.getInt(NamingActivity.ROUNDS_COMPLETED_SETTING, 0) >= settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, Integer.MAX_VALUE))
+            {
+                winnerScore = team1points;
+                winnerTextView = team1Score;
+                foundWinner = true;
+
+                if (team2points > winnerScore)
+                {
+                    winnerScore = team2points;
+                    winnerTextView = team2Score;
+                    foundWinner = true;
+                }
+
+                if (team3points > winnerScore)
+                {
+                    winnerScore = team3points;
+                    winnerTextView = team3Score;
+                    foundWinner = true;
+                }
+
+                if (team4points > winnerScore)
+                {
+                    winnerScore = team4points;
+                    winnerTextView = team4Score;
+                    foundWinner = true;
+                }
+
+                if (team5points > winnerScore)
+                {
+                    winnerScore = team5points;
+                    winnerTextView = team5Score;
+                    foundWinner = true;
+                }
+            }
         }
-        else if (team2points >= target)
+
+        else // Points mode
         {
-            winnerTextView = team2Score;
-            winnerScore = team2points;
-            foundWinner = true;
-        }
-        else if (team3points >= target)
-        {
-            winnerTextView = team3Score;
-            winnerScore = team3points;
-            foundWinner = true;
-        }
-        else if (team4points >= target)
-        {
-            winnerTextView = team4Score;
-            winnerScore = team4points;
-            foundWinner = true;
-        }
-        else if (team5points >= target)
-        {
-            winnerTextView = team5Score;
-            winnerScore = team5points;
-            foundWinner = true;
+
+            int target = settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1);
+
+            // NOTE: this code assumes point target won't change mid-game
+            if (team1points >= target) {
+                winnerTextView = team1Score;
+                winnerScore = team1points;
+                foundWinner = true;
+            } else if (team2points >= target) {
+                winnerTextView = team2Score;
+                winnerScore = team2points;
+                foundWinner = true;
+            } else if (team3points >= target) {
+                winnerTextView = team3Score;
+                winnerScore = team3points;
+                foundWinner = true;
+            } else if (team4points >= target) {
+                winnerTextView = team4Score;
+                winnerScore = team4points;
+                foundWinner = true;
+            } else if (team5points >= target) {
+                winnerTextView = team5Score;
+                winnerScore = team5points;
+                foundWinner = true;
+            }
         }
 
         if (foundWinner && winnerTextView != null)
         {
             winnerTextView.setText("Winner ! (" + winnerScore + ")");
         }
+    }
+
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+
     }
 }
