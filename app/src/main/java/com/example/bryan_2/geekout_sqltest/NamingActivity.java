@@ -75,7 +75,7 @@ public class NamingActivity extends AppCompatActivity {
         questionView.setText(question);
 
         teamNameView = findViewById(R.id.namingTeamView);
-        teamNameView.setText(namingTeam);
+        teamNameView.setText(namingTeam+" needs to name "+goal+" things.");
 
         scoreView = findViewById(R.id.currentScoreView);
         scoreView.setText(Integer.toString(currentScore));
