@@ -39,7 +39,6 @@ public class DiceRoller extends AppCompatActivity {
                 (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
         
         // TODO only display if DiceRoller is not being called as a result of "ReRoll"
-        // TODO keep track of TEAM_TURN in SCORE_ROUNDS sharedPrefs
         // Create a new AlertDialogFragment
         mDialog = PlayerChangeDialogFragment.newInstance();
         // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
