@@ -241,6 +241,20 @@ public class DiceRoller extends AppCompatActivity {
             Intent launchScoreboardActInt = new Intent(DiceRoller.this, ScoreboardActivity.class);
             startActivity(launchScoreboardActInt);
         }
+        if (id == R.id.action_end_game) {
+            final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                    (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+            final SharedPreferences settingsPrefs = getSharedPreferences
+                    (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+            final SharedPreferences.Editor settingsEditor = settingsPrefs.edit();
+            settingsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.ROUND_MODE);
+            settingsEditor.putInt(QuestionActivity.MAX_ROUNDS,
+                    scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1));
+            settingsEditor.apply();
+
+            Intent launchScoreboardActInt = new Intent(DiceRoller.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
+        }
 
         return super.onOptionsItemSelected(item);
     }
