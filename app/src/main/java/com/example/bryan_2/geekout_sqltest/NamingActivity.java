@@ -136,6 +136,7 @@ public class NamingActivity extends Activity {
 
         timer.start();
 
+        // TODO naming team shouldn't be holding timer while naming
         // Create a new AlertDialogFragment
         mDialog = PlayerChangeDialogFragment.newInstance();
         // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android

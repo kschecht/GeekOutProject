@@ -84,7 +84,7 @@ public class SettingsActivity extends Activity {
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS,
                         ((settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)) + 1));
                 settingsPrefsEditor.apply();
-                Log.d("setPoints", String.valueOf(settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
+                //Log.d("setPoints", String.valueOf(settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
                 mPointLimitText.setText(String.valueOf(
                         settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
             }
@@ -132,9 +132,6 @@ public class SettingsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // restore original prefs
-                Log.d("originalRoundLimit", ""+originalRoundLimit);
-                Log.d("originalPointLimit", ""+originalPointLimit);
-                Log.d("originalGameMode", ""+originalGameMode);
                 settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, originalGameMode);
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, originalRoundLimit);
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, originalPointLimit);
