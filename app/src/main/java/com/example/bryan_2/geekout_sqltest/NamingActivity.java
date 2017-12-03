@@ -47,6 +47,8 @@ public class NamingActivity extends Activity {
         goal = callingIntent.getIntExtra(BiddingActivity.TARGET_KEY, -1);
         currentScore = 0;
 
+        this.getWindow().getDecorView().setBackgroundResource(R.color.geekout);
+
         final SharedPreferences scoreRoundsPrefs = getSharedPreferences
                 (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
         final SharedPreferences.Editor scoreEditor = scoreRoundsPrefs.edit();

@@ -67,6 +67,9 @@ public class BiddingActivity extends Activity {
         currentBidView = findViewById(R.id.currentBidView);
 
 
+        this.getWindow().getDecorView().setBackgroundResource(R.color.geekout);
+
+
         allTeams = new ArrayList<String>();
         Log.i("TEAM", "Got to here");
         Log.i("TEAM", getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));

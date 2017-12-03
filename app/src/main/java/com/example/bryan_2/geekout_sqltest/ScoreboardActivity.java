@@ -39,6 +39,8 @@ public class ScoreboardActivity extends Activity {
         team3Score = findViewById(R.id.team3Score);
         team4Score = findViewById(R.id.team4Score);
         team5Score = findViewById(R.id.team5Score);
+        
+        this.getWindow().getDecorView().setBackgroundResource(R.color.geekout);
 
         scoreRoundsPrefs = getSharedPreferences
                 (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
