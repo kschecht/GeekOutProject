@@ -237,6 +237,10 @@ public class DiceRoller extends AppCompatActivity {
             Intent launchSettingsActInt = new Intent(DiceRoller.this, SettingsActivity.class);
             startActivity(launchSettingsActInt);
         }
+        if (id == R.id.action_scoreboard) {
+            Intent launchScoreboardActInt = new Intent(DiceRoller.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
+        }
 
         return super.onOptionsItemSelected(item);
     }

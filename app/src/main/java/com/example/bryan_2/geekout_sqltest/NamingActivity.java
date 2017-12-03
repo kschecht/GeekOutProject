@@ -8,6 +8,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,7 +23,7 @@ import org.w3c.dom.Text;
  * Created by colin on 11/19/17.
  */
 
-public class NamingActivity extends Activity {
+public class NamingActivity extends AppCompatActivity {
     String timerText;
 
     TextView questionView;
@@ -39,9 +44,11 @@ public class NamingActivity extends Activity {
 
     public static final String FINISHED_ROUND = "finshedRound";
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         Intent callingIntent = getIntent();
         question = callingIntent.getStringExtra(BiddingActivity.QUESTION_KEY);
@@ -79,6 +86,13 @@ public class NamingActivity extends Activity {
         addButton.setImageResource(android.R.drawable.ic_input_add); // TODO figure out why this isn't working from xml
         subtractButton = findViewById(R.id.decrementScoreButton);
         subtractButton.setImageResource(android.R.drawable.ic_input_delete); // TODO ditto
+
+        /*
+            Toolbar Settings
+            For some reason, this has to be here. If you place it higher, the toolbar might not show
+         */
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,11 +142,12 @@ public class NamingActivity extends Activity {
 
             @Override
             public void onFinish() {
-
+                Log.i("Timer", "Timer onFinish() called");
                 scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) -2);
                 scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
                 scoreEditor.commit();
                 Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
+                scoreboard.putExtra(FINISHED_ROUND, true);
                 startActivity(scoreboard);
             }
         };
@@ -183,5 +198,33 @@ public class NamingActivity extends Activity {
             return AddTeamsActivity.TEAM5_SCORE;
         }
         return "";
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+
+            Intent launchSettingsActInt = new Intent(NamingActivity.this, SettingsActivity.class);
+            startActivity(launchSettingsActInt);
+        }
+        if (id == R.id.action_scoreboard) {
+            Intent launchScoreboardActInt = new Intent(NamingActivity.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
