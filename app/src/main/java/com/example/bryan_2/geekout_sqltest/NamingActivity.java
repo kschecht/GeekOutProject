@@ -82,7 +82,7 @@ public class NamingActivity extends Activity {
                 {
                     timer.cancel();
                     scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) + 1);
-                    scoreEditor.apply();
+                    scoreEditor.commit();
                     Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
                     startActivity(scoreboard);
                 }
@@ -121,7 +121,7 @@ public class NamingActivity extends Activity {
             public void onFinish() {
 
                 scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) -2);
-                scoreEditor.apply();
+                scoreEditor.commit();
                 Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
                 startActivity(scoreboard);
             }
@@ -141,23 +141,23 @@ public class NamingActivity extends Activity {
     // Get the string key for the current team's score pref based on team name
     String currTeamScoreKey()
     {
-        if (namingTeam == "Team 1")
+        if (namingTeam.equals("Team 1"))
         {
             return AddTeamsActivity.TEAM1_SCORE;
         }
-        if (namingTeam == "Team 2")
+        if (namingTeam.equals("Team 2"))
         {
             return AddTeamsActivity.TEAM2_SCORE;
         }
-        if (namingTeam == "Team 3")
+        if (namingTeam.equals("Team 3"))
         {
             return AddTeamsActivity.TEAM3_SCORE;
         }
-        if (namingTeam == "Team 4")
+        if (namingTeam.equals("Team 4"))
         {
             return AddTeamsActivity.TEAM4_SCORE;
         }
-        if (namingTeam == "Team 5")
+        if (namingTeam.equals("Team 5"))
         {
             return AddTeamsActivity.TEAM5_SCORE;
         }

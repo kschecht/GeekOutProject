@@ -73,18 +73,21 @@ public class ScoreboardActivity extends Activity {
     // Search down from five to find the highest team playing.  Use max integer value as default
     int numTeams()
     {
-        if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, Integer.MAX_VALUE) != Integer.MAX_VALUE)
+        if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, Integer.MIN_VALUE) != Integer.MIN_VALUE)
         {
+            int test = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, Integer.MIN_VALUE);
             return 5;
         }
 
-        else if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, Integer.MAX_VALUE) != Integer.MAX_VALUE)
+        else if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, Integer.MIN_VALUE) != Integer.MIN_VALUE)
         {
+            int test = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, Integer.MIN_VALUE);
             return 4;
         }
 
-        else if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, Integer.MAX_VALUE) != Integer.MAX_VALUE)
+        else if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, Integer.MIN_VALUE) != Integer.MIN_VALUE)
         {
+            int test = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, Integer.MIN_VALUE);
             return 3;
         }
 
