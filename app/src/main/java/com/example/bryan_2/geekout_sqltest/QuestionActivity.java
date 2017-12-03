@@ -401,14 +401,25 @@ public class QuestionActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
 
             Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
-            //Log.d("getsHereAlready", "Yup");
             startActivity(launchSettingsActInt);
-
-            //Log.d("madeItHere", "Yes we made it!");
-            // TODO this is supposed to end the game as soon as you pick settings that would end it, doesn't do that
         }
 
         if (id == R.id.action_scoreboard) {
+            Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
+        }
+
+        if (id == R.id.action_end_game) {
+            final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                    (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+            final SharedPreferences settingsPrefs = getSharedPreferences
+                    (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+            final SharedPreferences.Editor settingsEditor = settingsPrefs.edit();
+            settingsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.ROUND_MODE);
+            settingsEditor.putInt(QuestionActivity.MAX_ROUNDS,
+                    scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1));
+            settingsEditor.apply();
+
             Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
             startActivity(launchScoreboardActInt);
         }

@@ -154,9 +154,6 @@ public class ScoreboardActivity extends Activity {
 
         if (settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1) == QuestionActivity.ROUND_MODE)
         {
-            /* TODO what to do in the case of a tie?  A tie is impossible in the points case since teams can't
-             * gain points at the same time and therefore one team gets to the goal first, but if there's a round limit?
-              * ACTUALLY A TIE IS POSSIBLE IF SETTINGS ARE CHANGED MID-GAME */
             if (scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) >=
                     settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, Integer.MAX_VALUE))
             {
@@ -253,7 +250,7 @@ public class ScoreboardActivity extends Activity {
             Toast.makeText(ScoreboardActivity.this, "Game Over",
                     Toast.LENGTH_SHORT).show();
             for (TextView wTV : winnerTextViews) {
-                wTV.setText("Winner ! (" + winnerScore + ")");
+                wTV.setText("Winner! (" + winnerScore + ")");
             }
         }
     }
