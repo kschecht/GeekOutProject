@@ -1,12 +1,17 @@
 package com.example.bryan_2.geekout_sqltest;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,17 +45,21 @@ public class DiceRoller extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // TODO get correct team name to pass to
+
+		
+        final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+
         // TODO only display if DiceRoller is not being called as a result of "ReRoll"
         // Create a new AlertDialogFragment
         mDialog = PlayerChangeDialogFragment.newInstance();
         // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
         Bundle alertMessageBundle = new Bundle();
         alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
-                "Pass the phone to Team 1");
+                "Pass the phone to Team "+scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM_TURN, 0));
         mDialog.setArguments(alertMessageBundle);
         // Show AlertDialogFragment
         mDialog.show(getFragmentManager(), "Alert");
-
 
         rollDice = (Button) findViewById(R.id.roll_button);
 
@@ -63,6 +72,7 @@ public class DiceRoller extends AppCompatActivity {
 
         randomNumber = new Random();
 
+        // TODO handle user clicking question without rolling first
 
         rollDice.setOnClickListener(new View.OnClickListener(){
 
@@ -71,10 +81,13 @@ public class DiceRoller extends AppCompatActivity {
 
                 // TODO Change dice number if we need more than 5 categories
                 numberGenerated = randomNumber.nextInt(5)+1;
+                MediaPlayer mPlayer= MediaPlayer.create(DiceRoller.this, R.raw.roll);
 
                 // Games
                 if(numberGenerated==1) {
                     games.setText("Games");
+                    mPlayer.start();
+
                     diceImage.setImageResource(R.drawable.dice_games);
                     myView.setBackgroundResource(R.color.games);
 
@@ -93,6 +106,8 @@ public class DiceRoller extends AppCompatActivity {
                 }
                 // Sci Fi
                 else if(numberGenerated==2) {
+                    mPlayer.start();
+
                     games.setText("Science-Fiction");
                     diceImage.setImageResource(R.drawable.dice_scifi);
                     myView.setBackgroundResource(R.color.scifi);
@@ -114,6 +129,8 @@ public class DiceRoller extends AppCompatActivity {
                 }
                 // Fantasy
                 else if(numberGenerated==3) {
+                    mPlayer.start();
+
                     games.setText("Fantasy");
                     diceImage.setImageResource(R.drawable.dice_fantasy);
                     myView.setBackgroundResource(R.color.fantasy);
@@ -133,6 +150,8 @@ public class DiceRoller extends AppCompatActivity {
 
                 // Miscellaneous
                 else if(numberGenerated==4) {
+                    mPlayer.start();
+
                     games.setText("Miscellaneous");
                     diceImage.setImageResource(R.drawable.dice_misc);
                     myView.setBackgroundResource(R.color.miscellaneous);
@@ -152,7 +171,10 @@ public class DiceRoller extends AppCompatActivity {
 
                 // Comic Books
                 else if(numberGenerated==5) {
+                    mPlayer.start();
+
                     games.setText("Comic Books");
+
                     diceImage.setImageResource(R.drawable.dice_comics);
                     myView.setBackgroundResource(R.color.comicbooks);
                     questionButton.setOnClickListener(new View.OnClickListener() {

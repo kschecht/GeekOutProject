@@ -1,6 +1,7 @@
 package com.example.bryan_2.geekout_sqltest;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,8 +16,6 @@ import android.widget.TextView;
 
 
 public class AddTeamsActivity extends Activity {
-    Button addTeam;
-    Button removeTeam;
     Button done;
     View myView;
     private ImageButton decrementTeamButton;
@@ -24,6 +23,14 @@ public class AddTeamsActivity extends Activity {
     private TextView numTeams;
 
     public static final String NUM_TEAMS = "numTeams";
+    public static final String SCORE_ROUNDS = "scoreRounds";
+    public static final String TEAM1_SCORE = "team1Score";
+    public static final String TEAM2_SCORE = "team2Score";
+    public static final String TEAM3_SCORE = "team3Score";
+    public static final String TEAM4_SCORE = "team4Score";
+    public static final String TEAM5_SCORE = "team5Score";
+    public static final String ROUNDS_FINISHED = "numRoundsFinished";
+    public static final String TEAM_TURN = "teamTurn";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +72,26 @@ public class AddTeamsActivity extends Activity {
         done.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) {
+                final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                        (SCORE_ROUNDS, MODE_PRIVATE);
+                final SharedPreferences.Editor sRPrefsEditor = scoreRoundsPrefs.edit();
+                // We rely on lack of a score entry to tell us when a team is not playing, so make sure the scores are cleared
+                sRPrefsEditor.clear();
+                sRPrefsEditor.putInt(ROUNDS_FINISHED, 0);
+                sRPrefsEditor.putInt(TEAM1_SCORE, 0);
+                sRPrefsEditor.putInt(TEAM2_SCORE, 0);
+                int intNumTeams = Integer.parseInt(numTeams.getText().toString());
+                if (intNumTeams >= 3) {
+                    sRPrefsEditor.putInt(TEAM3_SCORE, 0);
+                    if (intNumTeams >= 4) {
+                        sRPrefsEditor.putInt(TEAM4_SCORE, 0);
+                        if (intNumTeams == 5) {
+                            sRPrefsEditor.putInt(TEAM5_SCORE, 0);
+                        }
+                    }
+                }
+                sRPrefsEditor.putInt(TEAM_TURN, 1);
+                sRPrefsEditor.apply();
 
                 Intent sendIntent = new Intent(AddTeamsActivity.this, DiceRoller.class);
                 Log.i("TEAM", numTeams.getText().toString());

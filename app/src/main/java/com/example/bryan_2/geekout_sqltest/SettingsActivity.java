@@ -62,7 +62,7 @@ public class SettingsActivity extends Activity {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, QuestionActivity.DEFAULT_ROUNDS);
             originalRoundLimit = QuestionActivity.DEFAULT_ROUNDS;
         } else {
-            originalGameMode = settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, -1);
+            originalRoundLimit = settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, -1);
         }
         if (settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, QuestionActivity.DEFAULT_POINTS);
@@ -84,7 +84,7 @@ public class SettingsActivity extends Activity {
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS,
                         ((settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)) + 1));
                 settingsPrefsEditor.apply();
-                Log.d("setPoints", String.valueOf(settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
+                //Log.d("setPoints", String.valueOf(settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
                 mPointLimitText.setText(String.valueOf(
                         settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
             }
@@ -131,15 +131,18 @@ public class SettingsActivity extends Activity {
         cancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO updating and then cancelling results in original original settings
-
                 // restore original prefs
-                Log.d("originalRoundLimit", ""+originalRoundLimit);
                 settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, originalGameMode);
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, originalRoundLimit);
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, originalPointLimit);
                 mPointLimitText.setText(String.valueOf(originalPointLimit));
                 mRoundLimitText.setText(String.valueOf(originalRoundLimit));
+                // check original game mode
+                if (originalGameMode == QuestionActivity.POINTS_MODE) {
+                    mGameModeRadioGroup.check(R.id.pointsLimit);
+                } else {
+                    mGameModeRadioGroup.check(R.id.roundsLimit);
+                }
                 settingsPrefsEditor.apply();
 
                 finish();

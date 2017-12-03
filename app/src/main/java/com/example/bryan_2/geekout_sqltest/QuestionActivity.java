@@ -57,6 +57,7 @@ public class QuestionActivity extends AppCompatActivity {
     static final public String INTENT_COLOR = "Question Color";
     static final public String INTENT_BIDDING = "Bidding";
     static final public String STATE_USED_QUESTIONS = "used questions";
+    static final public String INTENT_MIN_BID = "Minimum Bid";
 
     static final public String GAMES = "Games";
     static final public String COMICS = "Comic Books";
@@ -89,7 +90,7 @@ public class QuestionActivity extends AppCompatActivity {
         /*
            SharedPreferences
          */
-        SharedPreferences settingsPrefs = getSharedPreferences
+        /*final SharedPreferences settingsPrefs = getSharedPreferences
                 (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
 
@@ -103,7 +104,10 @@ public class QuestionActivity extends AppCompatActivity {
         if (settingsPrefs.getInt(MAX_POINTS, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, QuestionActivity.DEFAULT_ROUNDS);
         }
-        settingsPrefsEditor.apply();
+        settingsPrefsEditor.apply();*/
+
+        /*final SharedPreferences scoreRoundPrefs = getSharedPreferences
+                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);*/
 
         /*
             Toolbar Settings
@@ -112,14 +116,78 @@ public class QuestionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // TODO remove so we don't have duplicate settings buttons
-        ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        /*final ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
                 startActivity(launchSettingsActInt);
+
+                // check if now have too many rounds or rounds and game should end
+                if (settingsPrefs.getInt(GAME_MODE, -1) == POINTS_MODE) {
+                    int maxScore = 0;
+                    int winningTeam = 0;
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1)) {
+                        winningTeam = 1;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1);
+                    }
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1) &&
+                            scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) > maxScore) {
+                        winningTeam = 2;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1);
+                    }
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1) &&
+                            scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) > maxScore) {
+                        winningTeam = 3;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1);
+                    }
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1) &&
+                            scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) > maxScore) {
+                        winningTeam = 4;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1);
+                    }
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) >=
+                            settingsPrefs.getInt(MAX_POINTS, -1) &&
+                            scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) > maxScore) {
+                        winningTeam = 5;
+                        maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1);
+                    }
+                    if (winningTeam != 0) {
+                        // TODO intent to show winner and restart game
+                    }
+                } else {
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1) > settingsPrefs.getInt(MAX_ROUNDS, -1)) {
+                        int maxScore = -1;
+                        int winningTeam = 0;
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1) > maxScore) {
+                            winningTeam = 1;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1);
+                        }
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) > maxScore) {
+                            winningTeam = 2;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1);
+                        }
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) > maxScore) {
+                            winningTeam = 3;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1);
+                        }
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) > maxScore) {
+                            winningTeam = 4;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1);
+                        }
+                        if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) > maxScore) {
+                            winningTeam = 5;
+                            maxScore = scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1);
+                        }
+                        // TODO intent to show winner and restart game
+                    }
+                }
             }
-        });
+        });*/
 
 
         /*
@@ -191,15 +259,6 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.i(TAG, "Done with picking");
 
-                /*// TODO Figure out a way to wait for user response to dialog before proceeding
-                // Create a new AlertDialogFragment
-                mDialog = PlayerChangeDialogFragment.newInstance();
-                // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
-                Bundle alertMessageBundle = new Bundle();
-                alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE, "Pass the phone to "+biddingTeam);
-                // Show AlertDialogFragment
-                mDialog.show(getFragmentManager(), "Alert");*/
-
                 // Adds picked question to the used question list
                 Log.i("USED", String.valueOf(mTV.getText()));
                 usedQuestions.add(String.valueOf(mTV.getText()));
@@ -209,6 +268,7 @@ public class QuestionActivity extends AppCompatActivity {
                 Intent intent = new Intent(QuestionActivity.this, BiddingActivity.class);
                 intent.putExtra(INTENT_BIDDING, String.valueOf(mTV.getText()));
                 intent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
+                intent.putExtra(INTENT_MIN_BID, String.valueOf(mTV.getText()).split("\n")[1].split(" ")[0]);
                 startActivity(intent);
             }
         });
@@ -260,7 +320,7 @@ public class QuestionActivity extends AppCompatActivity {
                     result = "No new questions";
                 else
                     result = chosenCategory + ": \n" + cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_BID)) + " " +
-                        cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
+                            cursor.getString(cursor.getColumnIndex(mDbHelper.QUESTION_NAME));
             }
             nextQuestion(); // Preps the next question
 
@@ -329,23 +389,66 @@ public class QuestionActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
             Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
+            //Log.d("getsHereAlready", "Yup");
             startActivity(launchSettingsActInt);
+
+            //Log.d("madeItHere", "Yes we made it!");
+            // TODO this is supposed to end the game as soon as you pick settings that would end it, doesn't do that
+
+            final SharedPreferences settingsPrefs = getSharedPreferences
+                    (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+            final SharedPreferences scoreRoundPrefs = getSharedPreferences
+                    (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+
+            boolean gameShouldEnd = false;
+
+            // check if now have too many rounds or rounds and game should end
+            if (settingsPrefs.getInt(GAME_MODE, -1) == POINTS_MODE) {
+                Log.d("Team1Score", ""+scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1));
+                Log.d("MaxPoints", ""+settingsPrefs.getInt(MAX_POINTS, -1));
+                if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    Log.d("shouldGetHere", "got here!!!!!");
+                    gameShouldEnd = true;
+                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    gameShouldEnd = true;
+                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    gameShouldEnd = true;
+                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    gameShouldEnd = true;
+                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    gameShouldEnd = true;
+                }
+            } else {
+                if (scoreRoundPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1) > settingsPrefs.getInt(MAX_ROUNDS, -1)) {
+                    gameShouldEnd = true;
+                }
+            }
+            if (gameShouldEnd) {
+                Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
+                startActivity(launchScoreboardActInt);
+            }
+        }
+
+        if (id == R.id.action_scoreboard) {
+            Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
         }
 
         return super.onOptionsItemSelected(item);

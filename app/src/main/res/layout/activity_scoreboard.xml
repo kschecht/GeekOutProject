@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1"
+    tools:context="com.example.bryan_2.geekout_sqltest.ScoreboardActivity">
+
+    <!-- worked using UITableLayout class example -->
+    <TableRow>
+
+        <TextView
+            android:id="@+id/scoreboardTitle"
+            android:layout_column="0"
+            android:padding="3dp"
+            android:text="@string/scoreboard_title"
+            android:textSize="30sp"
+            android:textAlignment="textStart"
+            android:textStyle="bold"/>
+
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/team1Name"
+            android:layout_column="0"
+            android:padding="3dp"
+            android:text="@string/team1"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/team1Score"
+            android:gravity="left"
+            android:padding="3dp"
+            android:text=""
+            android:textSize="25sp"
+            tools:ignore="RtlHardcoded" />
+    </TableRow>
+
+    <View
+        android:layout_height="2dp"
+        android:background="@color/blue" />
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/team2Name"
+            android:layout_column="0"
+            android:padding="3dp"
+            android:text="@string/team2"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/team2Score"
+            android:gravity="left"
+            android:padding="3dip"
+            android:text=""
+            android:textSize="25sp"
+            tools:ignore="RtlHardcoded" />
+    </TableRow>
+
+    <View
+        android:layout_height="2dp"
+        android:background="@color/blue" />
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/team3Name"
+            android:layout_column="0"
+            android:padding="3dp"
+            android:text="@string/team3"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/team3Score"
+            android:gravity="left"
+            android:padding="3dip"
+            android:text="@string/notPlaying"
+            android:textSize="25sp"
+            tools:ignore="RtlHardcoded" />
+    </TableRow>
+
+    <View
+        android:layout_height="2dp"
+        android:background="@color/blue" />
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/team4Name"
+            android:layout_column="0"
+            android:padding="3dp"
+            android:text="@string/team4"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/team4Score"
+            android:gravity="left"
+            android:padding="3dip"
+            android:text="@string/notPlaying"
+            android:textSize="25sp"
+            tools:ignore="RtlHardcoded" />
+    </TableRow>
+
+    <View
+        android:layout_height="2dp"
+        android:background="@color/blue" />
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/team5Name"
+            android:layout_column="0"
+            android:padding="3dp"
+            android:text="@string/team5"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/team5Score"
+            android:gravity="left"
+            android:padding="3dip"
+            android:text="@string/notPlaying"
+            android:textSize="25sp"
+            tools:ignore="RtlHardcoded" />
+    </TableRow>
+
+    <TableRow>
+        <Space
+            android:id="@+id/spacer"
+            android:layout_width="1dp"
+            android:layout_height="30dp"/>
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:id="@+id/doneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:text="@string/done" />
+    </TableRow>
+
+</TableLayout>
