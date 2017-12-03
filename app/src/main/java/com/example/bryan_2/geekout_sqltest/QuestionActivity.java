@@ -90,7 +90,7 @@ public class QuestionActivity extends AppCompatActivity {
         /*
            SharedPreferences
          */
-        final SharedPreferences settingsPrefs = getSharedPreferences
+        /*final SharedPreferences settingsPrefs = getSharedPreferences
                 (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
 
@@ -104,10 +104,10 @@ public class QuestionActivity extends AppCompatActivity {
         if (settingsPrefs.getInt(MAX_POINTS, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, QuestionActivity.DEFAULT_ROUNDS);
         }
-        settingsPrefsEditor.apply();
+        settingsPrefsEditor.apply();*/
 
-        final SharedPreferences scoreRoundPrefs = getSharedPreferences
-                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+        /*final SharedPreferences scoreRoundPrefs = getSharedPreferences
+                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);*/
 
         /*
             Toolbar Settings
@@ -116,7 +116,7 @@ public class QuestionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // TODO remove so we don't have duplicate settings buttons
-        final ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        /*final ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,7 +187,7 @@ public class QuestionActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
 
 
         /*
@@ -389,23 +389,66 @@ public class QuestionActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
             Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
+            //Log.d("getsHereAlready", "Yup");
             startActivity(launchSettingsActInt);
+
+            //Log.d("madeItHere", "Yes we made it!");
+            // TODO this is supposed to end the game as soon as you pick settings that would end it, doesn't do that
+
+            final SharedPreferences settingsPrefs = getSharedPreferences
+                    (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+            final SharedPreferences scoreRoundPrefs = getSharedPreferences
+                    (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+
+            boolean gameShouldEnd = false;
+
+            // check if now have too many rounds or rounds and game should end
+            if (settingsPrefs.getInt(GAME_MODE, -1) == POINTS_MODE) {
+                Log.d("Team1Score", ""+scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1));
+                Log.d("MaxPoints", ""+settingsPrefs.getInt(MAX_POINTS, -1));
+                if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    Log.d("shouldGetHere", "got here!!!!!");
+                    gameShouldEnd = true;
+                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    gameShouldEnd = true;
+                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    gameShouldEnd = true;
+                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    gameShouldEnd = true;
+                } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) >=
+                        settingsPrefs.getInt(MAX_POINTS, -1)) {
+                    gameShouldEnd = true;
+                }
+            } else {
+                if (scoreRoundPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1) > settingsPrefs.getInt(MAX_ROUNDS, -1)) {
+                    gameShouldEnd = true;
+                }
+            }
+            if (gameShouldEnd) {
+                Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
+                startActivity(launchScoreboardActInt);
+            }
+        }
+
+        if (id == R.id.action_scoreboard) {
+            Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
         }
 
         return super.onOptionsItemSelected(item);

@@ -90,6 +90,7 @@ public class ScoreboardActivity extends Activity {
                     return;
                 }
 
+                // TODO when accessing the scoreboard from question, should return to that question's page, currently goes back to dice page
                 Intent nextQuestion = new Intent(ScoreboardActivity.this, DiceRoller.class);
                 nextQuestion.putExtra(AddTeamsActivity.NUM_TEAMS, String.valueOf(numTeams()));
                 startActivity(nextQuestion);
@@ -135,7 +136,8 @@ public class ScoreboardActivity extends Activity {
         {
             /* TODO what to do in the case of a tie?  A tie is impossible in the points case since teams can't
              * gain points at the same time and therefore one team gets to the goal first, but if there's a round limit? */
-            if (scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) >= settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, Integer.MAX_VALUE))
+            if (scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) >=
+                    settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, Integer.MAX_VALUE))
             {
                 winnerScore = team1points;
                 winnerTextView = team1Score;
