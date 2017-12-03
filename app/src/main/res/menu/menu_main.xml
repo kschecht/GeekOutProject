@@ -10,6 +10,6 @@
     <item
         android:id="@+id/action_scoreboard"
         android:orderInCategory="100"
-        android:title="@string/scoreboard_title"
+        android:title="@string/action_scoreboard"
         app:showAsAction="never" />
 </menu>
