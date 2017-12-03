@@ -19,7 +19,15 @@ public class ScoreboardActivity extends Activity {
     private TextView team4Score;
     private TextView team5Score;
 
+    private int team1points;
+    private int team2points;
+    private int team3points;
+    private int team4points;
+    private int team5points;
+
     private SharedPreferences scoreRoundsPrefs;
+
+    private boolean foundWinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,34 +42,51 @@ public class ScoreboardActivity extends Activity {
 
         scoreRoundsPrefs = getSharedPreferences
                 (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
-        final SharedPreferences settingsPrefs = getSharedPreferences(QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
 
-        // TODO score can go negative.  -1 not an acceptable default.
-        String team1ScoreString = String.valueOf(scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1));
+        foundWinner = false;
+
+        // Get the simple score values in before we check for a winner.  Strings might change after that
+        team1points = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, Integer.MIN_VALUE);
+        String team1ScoreString = String.valueOf(team1points);
         team1Score.setText(team1ScoreString);
-        String team2ScoreString = String.valueOf(scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1));
+
+        team2points = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, Integer.MIN_VALUE);
+        String team2ScoreString = String.valueOf(team2points);
         team2Score.setText(team2ScoreString);
-        if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) != -1)
+
+        team3points = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, Integer.MIN_VALUE);
+        if (team3points != Integer.MIN_VALUE)
         {
-            String team3ScoreString = String.valueOf(scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1));
+            String team3ScoreString = String.valueOf(team3points);
             team3Score.setText(team3ScoreString);
         }
-        if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) != -1)
+
+        team4points = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, Integer.MIN_VALUE);
+        if (team4points != Integer.MIN_VALUE)
         {
-            String team4ScoreString = String.valueOf(scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1));
+            String team4ScoreString = String.valueOf(team4points);
             team4Score.setText(team4ScoreString);
         }
-        if (scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) != -1)
+
+        team5points = scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, Integer.MIN_VALUE);
+        if (team5points != Integer.MIN_VALUE)
         {
-            String team5ScoreString = String.valueOf(scoreRoundsPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1));
+            String team5ScoreString = String.valueOf(team5points);
             team5Score.setText(team5ScoreString);
         }
+
+        check_for_winner();
 
         final Button doneButton = (Button) findViewById(R.id.doneButton);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO If a team has won, go back to the start screen
+                if (foundWinner)
+                {
+                    Intent startScreen = new Intent(ScoreboardActivity.this, StartMenu.class);
+                    startActivity(startScreen);
+                    return;
+                }
 
                 Intent nextQuestion = new Intent(ScoreboardActivity.this, DiceRoller.class);
                 nextQuestion.putExtra(AddTeamsActivity.NUM_TEAMS, String.valueOf(numTeams()));
@@ -93,5 +118,60 @@ public class ScoreboardActivity extends Activity {
 
         // Min is 2 teams
         return 2;
+    }
+
+    // Checks for winner based on round mode, round number, and current scores
+    // Updates the user-facing string of the winner
+    void check_for_winner()
+    {
+        final SharedPreferences settingsPrefs = getSharedPreferences(QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+
+
+        if (settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1) == QuestionActivity.ROUND_MODE)
+        {
+            // TODO need to start tracking round number with the scoreRoundsPref
+            return;
+        }
+
+        int target = settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1);
+        TextView winnerTextView = null;
+        int winnerScore = 0;
+
+        // NOTE: this code assumes point target won't change mid-game
+        if (team1points >= target)
+        {
+            winnerTextView = team1Score;
+            winnerScore = team1points;
+            foundWinner = true;
+        }
+        else if (team2points >= target)
+        {
+            winnerTextView = team2Score;
+            winnerScore = team2points;
+            foundWinner = true;
+        }
+        else if (team3points >= target)
+        {
+            winnerTextView = team3Score;
+            winnerScore = team3points;
+            foundWinner = true;
+        }
+        else if (team4points >= target)
+        {
+            winnerTextView = team4Score;
+            winnerScore = team4points;
+            foundWinner = true;
+        }
+        else if (team5points >= target)
+        {
+            winnerTextView = team5Score;
+            winnerScore = team5points;
+            foundWinner = true;
+        }
+
+        if (foundWinner && winnerTextView != null)
+        {
+            winnerTextView.setText("Winner ! (" + winnerScore + ")");
+        }
     }
 }
