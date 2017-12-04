@@ -115,4 +115,11 @@ public class MainActivity extends Activity {
             container.removeView(view);
         }
     }
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+
+    }
 }
