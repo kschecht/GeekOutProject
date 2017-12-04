@@ -30,6 +30,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Created by Bryan_2 on 11/5/2017.
+ *
+ * Adapted from Adam Porter's DataManagementSQL app example
+ * https://gitlab.cs.umd.edu/cmsc436Fall2017Examples/CMSC436SampleCode/tree/master/DataManagementSQL/app/src/main/java/course
+ */
 public class QuestionActivity extends AppCompatActivity {
 
     // name of SharedPreferences with settings
