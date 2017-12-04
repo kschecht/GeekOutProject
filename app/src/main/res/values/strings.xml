@@ -32,4 +32,15 @@
     <string name="notPlaying">Not Playing</string>
     <string name="roll_dice">Roll the die!</string>
     <string name="end_game">End Game</string>
+
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
+    <string name="title_slide1">GeekOut</string>
+    <string name="slide1">GeekOut is a trivia game in which questions have more than one valid answer.
+        When a question is drawn, teams will take turns bidding on how many answers they think they can name.
+        The winner of that bidding then needs to give the number of answers they bid.
+        If they are able to give enough answers they get one point.  If they cannot give enough answers
+        they lose two points.  The team with the most points at the end of the game wins.</string>
+
 </resources>
