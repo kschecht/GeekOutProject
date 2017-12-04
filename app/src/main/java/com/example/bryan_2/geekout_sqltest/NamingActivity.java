@@ -37,6 +37,7 @@ public class NamingActivity extends AppCompatActivity {
 
     String question;
     String namingTeam;
+    String holdingTeam;
     int goal;
     int currentScore;
     int timeLimit; // in seconds
@@ -56,6 +57,7 @@ public class NamingActivity extends AppCompatActivity {
         Intent callingIntent = getIntent();
         question = callingIntent.getStringExtra(BiddingActivity.QUESTION_KEY);
         namingTeam = callingIntent.getStringExtra(BiddingActivity.NAMING_TEAM_KEY);
+        holdingTeam = callingIntent.getStringExtra(BiddingActivity.HOLDING_TEAM_KEY);
         goal = callingIntent.getIntExtra(BiddingActivity.TARGET_KEY, -1);
         currentScore = 0;
 
@@ -189,7 +191,9 @@ public class NamingActivity extends AppCompatActivity {
         // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
         Bundle alertMessageBundle = new Bundle();
         alertMessageBundle.putString(PlayerChangeDialogFragment.ALERT_MESSAGE,
-                "Pass the phone to " + namingTeam);
+                "Pass the phone to " + holdingTeam +
+                        ". You will keep track of time and of how many points "+
+                        namingTeam+" earns.");
         mDialog.setArguments(alertMessageBundle);
         // Show AlertDialogFragment
         mDialog.show(getFragmentManager(), "Alert");

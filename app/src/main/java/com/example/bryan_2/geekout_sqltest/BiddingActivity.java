@@ -31,6 +31,7 @@ import java.util.List;
 public class BiddingActivity extends AppCompatActivity {
     public static final String QUESTION_KEY = "QuestionString";
     public static final String NAMING_TEAM_KEY = "NamingTeamString";
+    public static final String HOLDING_TEAM_KEY = "HoldingTeamString";
     public static final String TARGET_KEY = "TargetString";
 
     public static final int BEGIN_NAMING_REQUEST = 12;
@@ -150,6 +151,7 @@ public class BiddingActivity extends AppCompatActivity {
                         Intent namingIntent = new Intent(BiddingActivity.this, NamingActivity.class);
                         namingIntent.putExtra(QUESTION_KEY, question);
                         namingIntent.putExtra(NAMING_TEAM_KEY, getNextTeam()); // "Next team" should be the only team left after the current team is passed
+                        namingIntent.putExtra(HOLDING_TEAM_KEY, biddingTeam);
                         namingIntent.putExtra(TARGET_KEY, previousBid);
                         startActivity(namingIntent);
                         return;
