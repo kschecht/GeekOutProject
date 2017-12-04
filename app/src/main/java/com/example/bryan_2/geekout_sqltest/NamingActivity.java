@@ -72,7 +72,7 @@ public class NamingActivity extends AppCompatActivity {
             return;
         }
 
-        timeLimit = 20 * goal; // TODO - This is the time limit when I play usually - Colin
+        timeLimit = 20 * goal;
         timeLeft = timeLimit;
         timerText = getString(R.string.timeRemaining);
 
@@ -81,7 +81,7 @@ public class NamingActivity extends AppCompatActivity {
         questionView.setText(question);
 
         teamNameView = findViewById(R.id.namingTeamView);
-        teamNameView.setText(namingTeam+" needs to name "+goal+" things.");
+        teamNameView.setText(namingTeam+" needs to name "+goal+" things. Start the timer to begin.");
 
         scoreView = findViewById(R.id.currentScoreView);
         scoreView.setText(Integer.toString(currentScore));
@@ -89,9 +89,9 @@ public class NamingActivity extends AppCompatActivity {
         timerView = findViewById(R.id.namingTimerView);
 
         addButton = findViewById(R.id.incrementScoreButton);
-        addButton.setImageResource(android.R.drawable.ic_input_add); // TODO figure out why this isn't working from xml
+        addButton.setImageResource(android.R.drawable.ic_input_add);
         subtractButton = findViewById(R.id.decrementScoreButton);
-        subtractButton.setImageResource(android.R.drawable.ic_input_delete); // TODO ditto
+        subtractButton.setImageResource(android.R.drawable.ic_input_delete);
         pauseButton = findViewById(R.id.pauseButton);
         pauseButton.setImageResource(android.R.drawable.ic_media_play);
 
@@ -185,7 +185,6 @@ public class NamingActivity extends AppCompatActivity {
 
         timerView.setText(timerText + timeLeft + " seconds");
 
-        // TODO naming team shouldn't be holding timer while naming
         // Create a new AlertDialogFragment
         mDialog = PlayerChangeDialogFragment.newInstance();
         // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android

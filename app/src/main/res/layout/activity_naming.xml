@@ -71,9 +71,6 @@
             android:layout_width="1dp"
             android:layout_height="30dp"/>
 
-        <!--
-             TODO Need to find a better image.  Couldn't find a minus sign in default drawables.  Might need to include our own
-         -->
         <ImageButton
             android:id="@+id/decrementScoreButton"
             android:layout_width="wrap_content"

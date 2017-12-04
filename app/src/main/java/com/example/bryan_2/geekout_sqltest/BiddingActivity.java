@@ -66,9 +66,9 @@ public class BiddingActivity extends AppCompatActivity {
         bidButton = findViewById(R.id.bidButton);
         passButton = findViewById(R.id.passButton);
         incrementButton = findViewById(R.id.incrementBidButton);
-        incrementButton.setImageResource(android.R.drawable.ic_input_add); // TODO figure out why this isn't working from xml
+        incrementButton.setImageResource(android.R.drawable.ic_input_add);
         decrementButton = findViewById(R.id.decrementBidButton);
-        decrementButton.setImageResource(android.R.drawable.ic_input_delete); // TODO ditto
+        decrementButton.setImageResource(android.R.drawable.ic_input_delete);
         teamName = findViewById(R.id.teamNameView);
         currentBidView = findViewById(R.id.currentBidView);
         final SharedPreferences scoreRoundsPrefs = getSharedPreferences
