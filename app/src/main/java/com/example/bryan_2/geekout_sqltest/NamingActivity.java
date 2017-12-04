@@ -32,6 +32,7 @@ public class NamingActivity extends AppCompatActivity {
     TextView timerView;
     ImageButton addButton;
     ImageButton subtractButton;
+    ImageButton pauseButton;
     CountDownTimer timer;
 
     String question;
@@ -39,6 +40,8 @@ public class NamingActivity extends AppCompatActivity {
     int goal;
     int currentScore;
     int timeLimit; // in seconds
+    long timeLeft; // in seconds
+    boolean timerIsRunning = false; // Android timers can't be asked if they're running.  Fuck this platform.
 
     private DialogFragment mDialog;
 
@@ -68,6 +71,7 @@ public class NamingActivity extends AppCompatActivity {
         }
 
         timeLimit = 20 * goal; // TODO - This is the time limit when I play usually - Colin
+        timeLeft = timeLimit;
         timerText = getString(R.string.timeRemaining);
 
         setContentView(R.layout.activity_naming);
@@ -86,6 +90,8 @@ public class NamingActivity extends AppCompatActivity {
         addButton.setImageResource(android.R.drawable.ic_input_add); // TODO figure out why this isn't working from xml
         subtractButton = findViewById(R.id.decrementScoreButton);
         subtractButton.setImageResource(android.R.drawable.ic_input_delete); // TODO ditto
+        pauseButton = findViewById(R.id.pauseButton);
+        pauseButton.setImageResource(android.R.drawable.ic_media_play);
 
         /*
             Toolbar Settings
@@ -101,7 +107,12 @@ public class NamingActivity extends AppCompatActivity {
 
                 if (currentScore == goal)
                 {
-                    timer.cancel();
+                    if (timerIsRunning)
+                    {
+                        timer.cancel();
+                        timeLeft = 0;
+                        timerIsRunning = false;
+                    }
                     scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) + 1);
                     scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
                     scoreEditor.commit();
@@ -124,35 +135,53 @@ public class NamingActivity extends AppCompatActivity {
             }
         });
 
-        timer = new CountDownTimer(timeLimit * 1000, 1000) {
-
+        pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTick(long l) {
+            public void onClick(View view) {
+                if (timerIsRunning)
+                {
+                    pauseButton.setImageResource(android.R.drawable.ic_media_play);
+                    timerIsRunning = false;
+                    timer.cancel();
+                }
+                else
+                {
+                    pauseButton.setImageResource(android.R.drawable.ic_media_pause);
+                    timer = new CountDownTimer(timeLeft * 1000, 1000) {
 
-                long timer = l/1000;
-                timerView.setText(timerText + timer + " seconds");
+                        @Override
+                        public void onTick(long l) {
 
-                if(timer<5  && timer > 0){
-                    MediaPlayer mPlayer= MediaPlayer.create(NamingActivity.this, R.raw.countdown);
+                            timeLeft = l/1000;
+                            timerView.setText(timerText + timeLeft + " seconds");
 
-                    mPlayer.start();
+                            if(timeLeft<5  && timeLeft > 0){
+                                MediaPlayer mPlayer= MediaPlayer.create(NamingActivity.this, R.raw.countdown);
+
+                                mPlayer.start();
+                            }
+                        }
+
+
+                        @Override
+                        public void onFinish() {
+                            Log.i("Timer", "Timer onFinish() called");
+                            scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) -2);
+                            scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
+                            scoreEditor.commit();
+                            Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
+                            scoreboard.putExtra(FINISHED_ROUND, true);
+                            startActivity(scoreboard);
+                        }
+                    };
+
+                    timer.start();
+                    timerIsRunning = true;
                 }
             }
+        });
 
-
-            @Override
-            public void onFinish() {
-                Log.i("Timer", "Timer onFinish() called");
-                scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) -2);
-                scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
-                scoreEditor.commit();
-                Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
-                scoreboard.putExtra(FINISHED_ROUND, true);
-                startActivity(scoreboard);
-            }
-        };
-
-        timer.start();
+        timerView.setText(timerText + timeLeft + " seconds");
 
         // TODO naming team shouldn't be holding timer while naming
         // Create a new AlertDialogFragment

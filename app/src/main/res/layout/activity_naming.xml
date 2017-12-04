@@ -98,6 +98,14 @@
             android:layout_centerHorizontal="true"
             android:text="@string/timeRemaining"/>
 
+        <ImageButton
+            android:id="@+id/pauseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/namingTimerView"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@android:drawable/ic_media_play" />
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
