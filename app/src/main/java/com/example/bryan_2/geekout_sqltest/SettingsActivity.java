@@ -1,4 +1,5 @@
 package com.example.bryan_2.geekout_sqltest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
@@ -84,7 +85,7 @@ public class SettingsActivity extends Activity {
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS,
                         ((settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)) + 1));
                 settingsPrefsEditor.apply();
-                Log.d("setPoints", String.valueOf(settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
+                //Log.d("setPoints", String.valueOf(settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
                 mPointLimitText.setText(String.valueOf(
                         settingsPrefs.getInt(QuestionActivity.MAX_POINTS, -1)));
             }
@@ -132,9 +133,6 @@ public class SettingsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // restore original prefs
-                Log.d("originalRoundLimit", ""+originalRoundLimit);
-                Log.d("originalPointLimit", ""+originalPointLimit);
-                Log.d("originalGameMode", ""+originalGameMode);
                 settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, originalGameMode);
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, originalRoundLimit);
                 settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, originalPointLimit);
@@ -178,7 +176,45 @@ public class SettingsActivity extends Activity {
 
                 settingsPrefsEditor.apply();
 
-                finish();
+                boolean gameShouldEnd = false;
+
+                final SharedPreferences scoreRoundPrefs = getSharedPreferences
+                        (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+
+                if (settingsPrefs.getInt(QuestionActivity.GAME_MODE, -1) == QuestionActivity.POINTS_MODE) {
+                    /*Log.d("Team1Score", ""+scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1));
+                    Log.d("MaxPoints", ""+settingsPrefs.getInt(MAX_POINTS, -1));*/
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM1_SCORE, -1) >=
+                            Integer.parseInt(max_points_string)) {
+                        //Log.d("shouldGetHere", "got here!!!!!");
+                        gameShouldEnd = true;
+                    } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM2_SCORE, -1) >=
+                            Integer.parseInt(max_points_string)) {
+                        gameShouldEnd = true;
+                    } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM3_SCORE, -1) >=
+                            Integer.parseInt(max_points_string)) {
+                        gameShouldEnd = true;
+                    } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM4_SCORE, -1) >=
+                            Integer.parseInt(max_points_string)) {
+                        gameShouldEnd = true;
+                    } else if (scoreRoundPrefs.getInt(AddTeamsActivity.TEAM5_SCORE, -1) >=
+                            Integer.parseInt(max_points_string)) {
+                        gameShouldEnd = true;
+                    }
+                } else {
+                    Log.d("roundsDone", ""+scoreRoundPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1));
+                    Log.d("maxRounds", ""+settingsPrefs.getInt(QuestionActivity.MAX_ROUNDS, -1));
+                    if (scoreRoundPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1) >=
+                            Integer.parseInt(max_rounds_string)) {
+                        gameShouldEnd = true;
+                    }
+                }
+                if (gameShouldEnd) {
+                    Intent launchScoreboardActInt = new Intent(SettingsActivity.this, ScoreboardActivity.class);
+                    startActivity(launchScoreboardActInt);
+                } else {
+                    finish();
+                }
             }
         });
     }

@@ -24,7 +24,6 @@ public class PlayerChangeDialogFragment extends DialogFragment {
                 .setMessage(getArguments().getString(ALERT_MESSAGE))
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, int id) {
-                        // TODO - shuts down current activity, leads to new activity
                     }
                 })
                 .create();

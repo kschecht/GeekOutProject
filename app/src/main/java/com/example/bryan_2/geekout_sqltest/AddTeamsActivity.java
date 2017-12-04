@@ -75,6 +75,8 @@ public class AddTeamsActivity extends Activity {
                 final SharedPreferences scoreRoundsPrefs = getSharedPreferences
                         (SCORE_ROUNDS, MODE_PRIVATE);
                 final SharedPreferences.Editor sRPrefsEditor = scoreRoundsPrefs.edit();
+                // We rely on lack of a score entry to tell us when a team is not playing, so make sure the scores are cleared
+                sRPrefsEditor.clear();
                 sRPrefsEditor.putInt(ROUNDS_FINISHED, 0);
                 sRPrefsEditor.putInt(TEAM1_SCORE, 0);
                 sRPrefsEditor.putInt(TEAM2_SCORE, 0);

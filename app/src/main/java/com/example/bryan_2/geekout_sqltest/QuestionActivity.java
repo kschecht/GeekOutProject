@@ -57,6 +57,7 @@ public class QuestionActivity extends AppCompatActivity {
     static final public String INTENT_COLOR = "Question Color";
     static final public String INTENT_BIDDING = "Bidding";
     static final public String STATE_USED_QUESTIONS = "used questions";
+    static final public String INTENT_MIN_BID = "Minimum Bid";
 
     static final public String GAMES = "Games";
     static final public String COMICS = "Comic Books";
@@ -89,7 +90,7 @@ public class QuestionActivity extends AppCompatActivity {
         /*
            SharedPreferences
          */
-        final SharedPreferences settingsPrefs = getSharedPreferences
+        /*final SharedPreferences settingsPrefs = getSharedPreferences
                 (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
 
@@ -103,10 +104,10 @@ public class QuestionActivity extends AppCompatActivity {
         if (settingsPrefs.getInt(MAX_POINTS, -1) == -1) {
             settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, QuestionActivity.DEFAULT_ROUNDS);
         }
-        settingsPrefsEditor.apply();
+        settingsPrefsEditor.apply();*/
 
-        final SharedPreferences scoreRoundPrefs = getSharedPreferences
-                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+        /*final SharedPreferences scoreRoundPrefs = getSharedPreferences
+                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);*/
 
         /*
             Toolbar Settings
@@ -115,7 +116,7 @@ public class QuestionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // TODO remove so we don't have duplicate settings buttons
-        final ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        /*final ImageButton settingsButton = (ImageButton) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +187,7 @@ public class QuestionActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
 
 
         /*
@@ -267,6 +268,7 @@ public class QuestionActivity extends AppCompatActivity {
                 Intent intent = new Intent(QuestionActivity.this, BiddingActivity.class);
                 intent.putExtra(INTENT_BIDDING, String.valueOf(mTV.getText()));
                 intent.putExtra(AddTeamsActivity.NUM_TEAMS, getIntent().getStringExtra(AddTeamsActivity.NUM_TEAMS));
+                intent.putExtra(INTENT_MIN_BID, String.valueOf(mTV.getText()).split("\n")[1].split(" ")[0]);
                 startActivity(intent);
             }
         });
@@ -387,16 +389,12 @@ public class QuestionActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -404,6 +402,26 @@ public class QuestionActivity extends AppCompatActivity {
 
             Intent launchSettingsActInt = new Intent(QuestionActivity.this, SettingsActivity.class);
             startActivity(launchSettingsActInt);
+        }
+
+        if (id == R.id.action_scoreboard) {
+            Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
+        }
+
+        if (id == R.id.action_end_game) {
+            final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                    (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+            final SharedPreferences settingsPrefs = getSharedPreferences
+                    (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+            final SharedPreferences.Editor settingsEditor = settingsPrefs.edit();
+            settingsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.ROUND_MODE);
+            settingsEditor.putInt(QuestionActivity.MAX_ROUNDS,
+                    scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1));
+            settingsEditor.apply();
+
+            Intent launchScoreboardActInt = new Intent(QuestionActivity.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
         }
 
         return super.onOptionsItemSelected(item);
@@ -441,11 +459,5 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
-    /*
-        To prevent issues from pressing the back button
-     */
-    @Override
-    public void onBackPressed() {
 
-    }
 }

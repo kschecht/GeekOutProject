@@ -8,6 +8,9 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.Button;
@@ -35,9 +38,18 @@ public class DiceRoller extends AppCompatActivity {
         //dice roller activity
         setContentView(R.layout.dice_roller);
 
+        /*
+            Toolbar Settings
+         */
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+
+        // TODO get correct team name to pass to
+
+		
         final SharedPreferences scoreRoundsPrefs = getSharedPreferences
                 (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
-        
+
         // TODO only display if DiceRoller is not being called as a result of "ReRoll"
         // Create a new AlertDialogFragment
         mDialog = PlayerChangeDialogFragment.newInstance();
@@ -203,6 +215,48 @@ public class DiceRoller extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+
+            Intent launchSettingsActInt = new Intent(DiceRoller.this, SettingsActivity.class);
+            startActivity(launchSettingsActInt);
+        }
+        if (id == R.id.action_scoreboard) {
+            Intent launchScoreboardActInt = new Intent(DiceRoller.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
+        }
+        if (id == R.id.action_end_game) {
+            final SharedPreferences scoreRoundsPrefs = getSharedPreferences
+                    (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
+            final SharedPreferences settingsPrefs = getSharedPreferences
+                    (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
+            final SharedPreferences.Editor settingsEditor = settingsPrefs.edit();
+            settingsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.ROUND_MODE);
+            settingsEditor.putInt(QuestionActivity.MAX_ROUNDS,
+                    scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, -1));
+            settingsEditor.apply();
+
+            Intent launchScoreboardActInt = new Intent(DiceRoller.this, ScoreboardActivity.class);
+            startActivity(launchScoreboardActInt);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
