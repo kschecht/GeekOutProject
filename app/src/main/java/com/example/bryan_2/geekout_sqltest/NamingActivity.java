@@ -105,24 +105,24 @@ public class NamingActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentScore++;
+                if (timerIsRunning) {
+                    currentScore++;
 
-                if (currentScore == goal)
-                {
-                    if (timerIsRunning)
-                    {
-                        timer.cancel();
-                        timeLeft = 0;
-                        timerIsRunning = false;
+                    if (currentScore == goal) {
+                        if (timerIsRunning) {
+                            timer.cancel();
+                            timeLeft = 0;
+                            timerIsRunning = false;
+                        }
+                        scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) + 1);
+                        scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
+                        scoreEditor.commit();
+                        Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
+                        scoreboard.putExtra(FINISHED_ROUND, true);
+                        startActivity(scoreboard);
                     }
-                    scoreEditor.putInt(currTeamScoreKey(), scoreRoundsPrefs.getInt(currTeamScoreKey(), 0) + 1);
-                    scoreEditor.putInt(AddTeamsActivity.ROUNDS_FINISHED, scoreRoundsPrefs.getInt(AddTeamsActivity.ROUNDS_FINISHED, 0) + 1);
-                    scoreEditor.commit();
-                    Intent scoreboard = new Intent(NamingActivity.this, ScoreboardActivity.class);
-                    scoreboard.putExtra(FINISHED_ROUND, true);
-                    startActivity(scoreboard);
+                    scoreView.setText(Integer.toString(currentScore));
                 }
-                scoreView.setText(Integer.toString(currentScore));
             }
         });
 
