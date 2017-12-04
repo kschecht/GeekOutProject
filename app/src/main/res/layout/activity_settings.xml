@@ -30,6 +30,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/game_mode" />
 
+    <!-- derived from UIRadioGroup class example -->
     <RadioGroup
         android:id="@+id/gameModeRadioButtons"
         android:layout_width="wrap_content"

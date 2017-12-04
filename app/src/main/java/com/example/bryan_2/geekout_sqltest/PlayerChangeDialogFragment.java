@@ -10,6 +10,7 @@ import android.os.Bundle;
  * Created by kschechter on 11/14/2017.
  */
 
+// dialog fragment code derived from Adam Porter's UIAlertDialog app
 // displays whenever need to hand phone to a new team
 public class PlayerChangeDialogFragment extends DialogFragment {
     public static final String ALERT_MESSAGE = "alertMessage";
