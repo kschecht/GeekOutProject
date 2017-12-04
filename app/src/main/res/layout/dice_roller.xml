@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:textAlignment="center"
-        android:text="Roll Dice" />
+        android:text="Roll Die" />
 
     <Button
         android:id="@+id/questionButton"

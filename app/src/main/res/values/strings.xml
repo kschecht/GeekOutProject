@@ -30,6 +30,6 @@
     <string name="team4">Team 4: </string>
     <string name="team5">Team 5: </string>
     <string name="notPlaying">Not Playing</string>
-    <string name="roll_dice">Roll the dice!</string>
+    <string name="roll_dice">Roll the die!</string>
     <string name="end_game">End Game</string>
 </resources>
