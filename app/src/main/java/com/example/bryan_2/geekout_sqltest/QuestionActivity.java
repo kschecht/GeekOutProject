@@ -88,28 +88,6 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questions);
 
         /*
-           SharedPreferences
-         */
-        /*final SharedPreferences settingsPrefs = getSharedPreferences
-                (QuestionActivity.SETTINGS_PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor settingsPrefsEditor = settingsPrefs.edit();
-
-        // initialize settings to defaults if they haven't been initialized yet
-        if (settingsPrefs.getInt(GAME_MODE, -1) == -1) {
-            settingsPrefsEditor.putInt(QuestionActivity.GAME_MODE, QuestionActivity.POINTS_MODE);
-        }
-        if (settingsPrefs.getInt(MAX_ROUNDS, -1) == -1) {
-            settingsPrefsEditor.putInt(QuestionActivity.MAX_ROUNDS, QuestionActivity.DEFAULT_POINTS);
-        }
-        if (settingsPrefs.getInt(MAX_POINTS, -1) == -1) {
-            settingsPrefsEditor.putInt(QuestionActivity.MAX_POINTS, QuestionActivity.DEFAULT_ROUNDS);
-        }
-        settingsPrefsEditor.apply();*/
-
-        /*final SharedPreferences scoreRoundPrefs = getSharedPreferences
-                (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);*/
-
-        /*
             Toolbar Settings
          */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -207,9 +185,6 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Re-Roll for Category");
-//                Intent intent = new Intent(QuestionActivity.this, DiceRoller.class);
-//
-//                startActivity(intent);
                 finish();
             }
         });

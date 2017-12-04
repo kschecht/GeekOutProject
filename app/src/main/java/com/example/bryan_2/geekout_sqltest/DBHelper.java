@@ -8,6 +8,7 @@ import android.content.Context;
  * Created by Bryan_2 on 11/5/2017.
  */
 
+// database code derived from Adam Porter's DataManagementSQL app
 public class DBHelper extends SQLiteOpenHelper {
 
     // Used here an maybe elsewhere

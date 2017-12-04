@@ -72,6 +72,7 @@ public class AddTeamsActivity extends Activity {
         done.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) {
+                // SharedPreferences derived from Adam Porter's DataManagementSharedPreference app
                 final SharedPreferences scoreRoundsPrefs = getSharedPreferences
                         (SCORE_ROUNDS, MODE_PRIVATE);
                 final SharedPreferences.Editor sRPrefsEditor = scoreRoundsPrefs.edit();

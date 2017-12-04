@@ -249,6 +249,7 @@ public class BiddingActivity extends AppCompatActivity {
 
     }
 
+    // options menu code derived from Adam Porter's HelloAndroidWithMenus example
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
