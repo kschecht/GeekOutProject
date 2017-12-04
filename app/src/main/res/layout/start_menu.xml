@@ -16,11 +16,7 @@
 
         android:src="@drawable/geekout_logo"
         android:scaleType="centerInside"
-        android:layout_gravity="center_horizontal"
-
-
-
-        />
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:id="@+id/settings_button"
