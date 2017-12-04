@@ -16,6 +16,8 @@ import android.widget.Button;
 
 /**
  * Created by narjitsingh on 12/3/17.
+ * The source code for the tutorial page is taken and customized based on our needs.
+ * https://github.com/ashokpurohit/IntroScreenSlider/blob/master/app/src/main/java/com/gadgetcreek/introscreenslider/IntroSlider.java
  */
 public class MainActivity extends Activity {
     private ViewPager pageNumber;
