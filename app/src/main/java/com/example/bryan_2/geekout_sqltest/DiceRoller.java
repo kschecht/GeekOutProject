@@ -44,13 +44,10 @@ public class DiceRoller extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        // TODO get correct team name to pass to
-
 		
         final SharedPreferences scoreRoundsPrefs = getSharedPreferences
                 (AddTeamsActivity.SCORE_ROUNDS, MODE_PRIVATE);
 
-        // TODO only display if DiceRoller is not being called as a result of "ReRoll"
         // Create a new AlertDialogFragment
         mDialog = PlayerChangeDialogFragment.newInstance();
         // method for passing text from https://stackoverflow.com/questions/12739909/send-data-from-activity-to-fragment-in-android
@@ -72,14 +69,11 @@ public class DiceRoller extends AppCompatActivity {
 
         randomNumber = new Random();
 
-        // TODO handle user clicking question without rolling first
-
         rollDice.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) {
                 TextView games = (TextView)findViewById(R.id.cat_name);
 
-                // TODO Change dice number if we need more than 5 categories
                 numberGenerated = randomNumber.nextInt(5)+1;
                 MediaPlayer mPlayer= MediaPlayer.create(DiceRoller.this, R.raw.roll);
 
@@ -190,7 +184,7 @@ public class DiceRoller extends AppCompatActivity {
                     });
                 }
 
-                // TODO implement if we need more categoreis
+                // implement if we need more categoreis
 //                else if(numberGenerated==6) {
 //                    diceImage.setImageResource(R.drawable.dice_six_faces_six);
 //                    myView.setBackgroundResource(R.color.pink);
