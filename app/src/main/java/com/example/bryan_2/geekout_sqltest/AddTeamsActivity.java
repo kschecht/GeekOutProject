@@ -108,6 +108,12 @@ public class AddTeamsActivity extends Activity {
 
 
     }
+    /*
+            To prevent issues from pressing the back button
+         */
+    @Override
+    public void onBackPressed() {
 
+    }
 
 }

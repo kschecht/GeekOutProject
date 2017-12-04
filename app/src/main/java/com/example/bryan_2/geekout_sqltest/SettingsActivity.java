@@ -218,4 +218,11 @@ public class SettingsActivity extends Activity {
             }
         });
     }
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+
+    }
 }

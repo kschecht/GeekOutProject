@@ -253,5 +253,12 @@ public class DiceRoller extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+        To prevent issues from pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+
+    }
 
 }
